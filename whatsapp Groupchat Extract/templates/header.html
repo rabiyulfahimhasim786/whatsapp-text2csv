@@ -1,0 +1,122 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+
+<style>
+    .header {
+    overflow: hidden;
+    background: #0b9b3f;
+    padding: 10px 10px;
+  }
+  
+  .header a {
+    float: left;
+    color: #fff;
+    text-align: center;
+    padding: 12px;
+    text-decoration: none;
+    font-size: 18px; 
+    line-height: 25px;
+    border-radius: 4px;
+  }
+  
+  .header a.logo {
+    font-size: 25px;
+    font-weight: bold;
+    color: #fff;
+  }
+  
+  /* .header a:hover {
+    background-color: #ddd;
+    color: black;
+  } */
+  
+  .header a.active {
+    background-color: dodgerblue;
+    color: white;
+  }
+  
+  .header-right {
+    float: right;
+  }
+  
+  @media screen and (max-width: 500px) {
+    .header a {
+      float: none;
+      display: block;
+      text-align: left;
+    }
+    
+    .header-right {
+      float: none;
+    }
+  }
+    .descritionsclass {
+     display: flex;
+     margin-bottom: 15px;
+    }
+    .descritionsclass label {
+      padding-right: 10px;
+    }
+    .documentlabel {
+      padding-right: 10px;
+  }
+    .upload_box {
+      border-radius: 20px !important;
+      box-shadow: rgb(14 30 37 / 12%) 0px 2px 4px 0px, rgb(14 30 37 / 32%) 0px 2px 16px 0px ;
+    }
+    .hover-underline-animation {
+    display: inline-block;
+    position: relative;
+    color: #fff;
+  }
+  
+  .hover-underline-animation:after {
+    content: '';
+    position: absolute;
+    width: 100%;
+    transform: scaleX(0);
+    height: 2px;
+    bottom: 0;
+    left: 0;
+    background-color: #fff;
+    transform-origin: bottom right;
+    transition: transform 0.25s ease-out;
+  }
+  
+  .hover-underline-animation:hover:after {
+    transform: scaleX(1);
+    transform-origin: bottom left;
+  }
+  </style>
+<body>
+    <div class="header">
+      <a href="#" style="margin-left: 15px;" class="bace_title l_ogo"><i class="fa fa-commenting-o" aria-hidden="true"></i> Whatsapp  Groupchat Extractor</a>
+        <div class="header-right" id="myDIV">
+          <a class="hover-underline-animation btnnn " href="{% url 'upload_txt'%}"><i class="fa fa-home" style="font-size: 22px;" aria-hidden="true"></i></a>
+          
+          <a class="hover-underline-animation btnnn" href="{% url 'retrieve' %}">Check data</a>
+         
+        </div>
+      </div>
+</body>
+</html>
+
+<!-- <script>
+  // Add active class to the current button (highlight it)
+  var header = document.getElementById("myDIV");
+  var btns = header.getElementsByClassName("btnnn");
+  for (var i = 0; i < btns.length; i++) {
+    btns[i].addEventListener("click", function() {
+    var current = document.getElementsByClassName("active");
+    current[0].className = current[0].className.replace(" active", "");
+    this.className += " active";
+    });
+  }
+  </script> -->

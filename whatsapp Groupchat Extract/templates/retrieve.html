@@ -1,0 +1,93 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Retrieve</title>
+    <style>
+        body{
+            margin: 0px;
+            padding: 0px;
+            font-family: system-ui,-apple-system,"Segoe UI",Roboto,"Helvetica Neue","Noto Sans","Liberation Sans",Arial,sans-serif,"Apple Color Emoji","Segoe UI Emoji","Segoe UI Symbol","Noto Color Emoji";
+        }
+        .retrieve_table {
+        margin-top: 40px;
+    }
+    table {
+        /* margin-left: 550px;
+        margin-top: 150px; */
+        column-width: 20px;
+        font-size: 15px;
+        /* border: 5px solid black; */
+        border: none;
+        padding: 5px;
+        border-collapse: collapse;
+        width: 90%;
+        margin: auto;
+    }
+    thead {
+        padding: 10px;
+        background: #0b9b3f;
+        color: #fff;
+    }
+    tr:nth-child(even){background-color: #ebe1ff}
+    tbody {
+        padding: 10px;
+    }
+    .retrieve_table th {
+        border: none;
+        
+    }
+    .editbtn {
+        padding: 10px 20px;
+        background: #0b9b3f;
+        color: #fff;
+        text-decoration: none;
+        border-radius: 20px;
+        font-size: 15px;
+    }
+    .deletebtn {
+        padding: 10px 20px;
+        background: #dc2626;
+        color: #fff;
+        text-decoration: none;
+        border-radius: 20px;
+        font-size: 15px;
+    }
+    .retrieve_table td {
+       line-height: 25px;
+    }
+    </style>
+</head>
+
+<body>
+    {% include 'header.html' %}
+    <div class="container">
+        <table class="retrieve_table" border="5px solid #000;">
+            <tbody>
+                <thead>
+                    <tr>
+                        <th>Date</th>
+                        <th>Person</th>
+                        <th>Chat</th>
+                        <th>Chat</th>
+                        <th >Edit</th>
+                        <th>Delete</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for i in details %}
+                    <tr>
+                        <td style="padding:10px;">{{i.title}}</td>
+                        <td style="padding:10px;">{{i.year}}</td>
+                        <td style="padding:10px;">{{i.filmurl}}</td>
+                        <td style="padding:10px;">{{i.genre}}</td>
+                        <td style="padding:10px;"><a class="editbtn" href="{% url 'edit' i.pk %}">Edit</a></td>
+                        <td style="padding:10px;"><a class="deletebtn" href="{% url 'delete' i.pk %}">Delete</a></td>
+                    </tr>
+                    {% endfor %}
+                </tbody>
+            </tbody>
+        </table>
+    </div>
+</body>
+
+</html>
