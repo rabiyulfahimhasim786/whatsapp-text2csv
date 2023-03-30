@@ -5,3 +5,13 @@ class whatsapp(models.Model):
 
     def __str__(self):
         return self.chat
+
+class Film(models.Model):
+    title = models.TextField(blank=True)
+    year = models.TextField(blank=True)
+    filmurl = models.TextField(blank=True)
+    # genre = models.ForeignKey(Genre, on_delete=models.CASCADE)
+    genre = models.TextField(blank=True)
+    
+    def __str__(self):
+        return self.title

@@ -40,8 +40,7 @@ def getDatapoint(line):
     else:
         author= None
     return date, time, author, message
-# dot='./media/'
-dot = '/var/www/subdomain/whatsappdata/analysis/media/'
+dot='./media/'
 def index(requests):
     documents = whatsapp.objects.all()
     for obj in documents:
@@ -110,7 +109,7 @@ def upload_txt(request):
             # df.to_csv(dot+'media/data.csv', index = False)
             #filename = "test1.txt"
             filename = dot + str(baseurls)
-            df = pd.read_csv(filename, header=0, encoding='utf8', on_bad_lines='skip')
+            df = pd.read_csv(filename, header=0, encoding='utf8')
             # df = pd.read_csv(filename, header=0, na_values=['NA'], delimiter='\t', encoding='utf8')
             # df = pd.read_csv(filename, header=None, names=['col1', 'col2', 'col3'], encoding='utf8')
             # # df = pd.read_csv(filename, header=None, delimiter='\t', encoding='utf8')
@@ -121,44 +120,19 @@ def upload_txt(request):
                 reader = csv.reader(file)
                 next(reader)  # Advance past the header
                 for row in reader:
-                    if len(row) == 1:
-                        film, _ = Film.objects.get_or_create(title=row[0],)
-                        film.save()
-                    elif len(row) == 2:
-                        film, _ = Film.objects.get_or_create(title=row[0],
-                        year=row[1],)
-                        film.save()
-                    elif len(row) == 3:
-                        film, _ = Film.objects.get_or_create(title=row[0],
-                        year=row[1],
-                        filmurl=row[2],)
-                        film.save()
-                    elif len(row) == 4:
-                        # print(row)
-                        # print(len(row))
+                    print(row)
 
-                        # genre, _ = Genre.objects.get_or_create(name=row[0])
+            # genre, _ = Genre.objects.get_or_create(name=row[0])
 
-                        film, _ = Film.objects.get_or_create(title=row[0],
-                        year=row[1],
-                        filmurl=row[2],
-                        genre=row[3],)
-                        film.save()
-                    return render(request, 'form_upload.html', {})
-            #     for row in reader:
-            #         print(row)
-
-            # # genre, _ = Genre.objects.get_or_create(name=row[0])
-
-            #         film, _ = Film.objects.get_or_create(title=row[0],
-            #           year=row[1],
-            #           filmurl = row[2],
-            #           genre=row[3])
-            #         # film, _ = Film.objects.get_or_create(title=row[3],
-            #         #   year=row[4],
-            #         #   filmurl = row[6],
-            #         #   genre=row[2])
-            #         film.save()
+                    film, _ = Film.objects.get_or_create(title=row[0],
+                      year=row[1],
+                      filmurl = row[2],
+                      genre=row[3])
+                    # film, _ = Film.objects.get_or_create(title=row[3],
+                    #   year=row[4],
+                    #   filmurl = row[6],
+                    #   genre=row[2])
+                    film.save()
         #filedata = dot+'/media/data.csv'
         # dfjson = pd.read_csv(filedata , index_col=None, header=0,  encoding= 'unicode_escape')
         # #geeks = df.to_html()
