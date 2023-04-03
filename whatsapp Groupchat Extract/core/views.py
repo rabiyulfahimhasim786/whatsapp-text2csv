@@ -183,7 +183,8 @@ def upload_txt(request):
 
                         # genre, _ = Genre.objects.get_or_create(name=row[0])
                     print('passed')
-                    film, _ = Film.objects.get_or_create(title=row[0],
+                    # film, _ = Film.objects.get_or_create(title=row[0],
+                    film, _ = Film.objects.get_or_create(title=row[0],                                   
                     year=row[1],
                     filmurl=row[2],
                     genre=row[3],)
