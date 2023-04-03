@@ -12,7 +12,7 @@ import matplotlib.pyplot as plt
 #from wordcloud import WordCloud, STOPWORDS, ImageColorGenerator
 from .models import whatsapp, Film
 from .forms import WhatsappForm, FilmForm
-
+import os
 
 def date_time(s):
     pattern = '^([0-9]+)(\/)([0-9]+)(\/)([0-9]+), ([0-9]+):([0-9]+)[ ]?(AM|PM|am|pm)? -'
@@ -189,6 +189,10 @@ def upload_txt(request):
                     filmurl=row[2],
                     genre=row[3],)
                 film.save()
+                if os.path.exists(filename):
+                    os.remove(filename)
+                else:
+                    print("That file does not exist!")
                 return render(request, 'form_upload.html', {})
             #     for row in reader:
             #         print(row)
