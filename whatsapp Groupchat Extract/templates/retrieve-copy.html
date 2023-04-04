@@ -12,11 +12,11 @@
         margin-top: 40px;
     }
     table {
-        /* * margin-left: 550px;
-        margin-top: 150px; * */
+        /* margin-left: 550px;
+        margin-top: 150px; */
         column-width: 20px;
         font-size: 15px;
-        border: 5px solid black; 
+        /* border: 5px solid black; */
         border: none;
         padding: 5px;
         border-collapse: collapse;
@@ -55,14 +55,6 @@
     .retrieve_table td {
        line-height: 25px;
     }
-    .meg {
-        display: inline-block;
-        width: 200px;
-        white-space: nowrap;
-        overflow: hidden !important;
-        text-overflow: ellipsis;
-        border: none;
-    }
     </style>
 </head>
 
@@ -73,12 +65,12 @@
             <tbody>
                 <thead>
                     <tr>
-                        <th width="15%">Date and Time</th>
-                        <th width="15%">Name</th>
-                        <th width="50%">Message</th>
-                        <!-- <th>Message</th> -->
-                        <th width="10%">Edit</th>
-                        <th width="10%">Delete</th>
+                        <th>Date</th>
+                        <th>Time</th>
+                        <th>Name</th>
+                        <th>Message</th>
+                        <th >Edit</th>
+                        <th>Delete</th>
                     </tr>
                 </thead>
                 <tbody>
@@ -87,9 +79,9 @@
                         <td style="padding:10px;">{{i.title}}</td>
                         <td style="padding:10px;">{{i.year}}</td>
                         <td style="padding:10px;">{{i.filmurl}}</td>
-                        <!-- <td style="padding:10px;" class="meg">{{i.genre}}</td> -->
-                        <td style="padding:10px;text-align: center;"><a class="editbtn" href="{% url 'edit' i.pk %}">Edit</a></td>
-                        <td style="padding:10px;text-align: center;"><a class="deletebtn" href="{% url 'delete' i.pk %}">Delete</a></td>
+                        <td style="padding:10px;">{{i.genre}}</td>
+                        <td style="padding:10px;"><a class="editbtn" href="{% url 'edit' i.pk %}">Edit</a></td>
+                        <td style="padding:10px;"><a class="deletebtn" href="{% url 'delete' i.pk %}">Delete</a></td>
                     </tr>
                     {% endfor %}
                 </tbody>

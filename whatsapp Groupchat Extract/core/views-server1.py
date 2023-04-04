@@ -13,7 +13,7 @@ import matplotlib.pyplot as plt
 from .models import whatsapp, Film
 from .forms import WhatsappForm, FilmForm
 import os
-import re
+
 def date_time(s):
     pattern = '^([0-9]+)(\/)([0-9]+)(\/)([0-9]+), ([0-9]+):([0-9]+)[ ]?(AM|PM|am|pm)? -'
     result = regex.match(pattern, s)
@@ -40,8 +40,8 @@ def getDatapoint(line):
     else:
         author= None
     return date, time, author, message
-dot='./media/'
-# dot = '/var/www/subdomain/whatsappdata/analysis/media/'
+# dot='./media/'
+dot = '/var/www/subdomain/whatsappdata/analysis/media/'
 def index(requests):
     documents = whatsapp.objects.all()
     for obj in documents:
@@ -84,85 +84,73 @@ def upload_txt(request):
             for obj in documents:
                 baseurls = obj.chat
             print(baseurls)
-            
+            # data = []
+            # #conversation = 'whatsapp-chat-data.txt'
+            # conversation = dot + str(baseurls)
+            # print(conversation)
+            # with open(conversation, encoding="utf-8") as fp:
+            #     fp.readline()
+            #     messageBuffer = []
+            #     date, time, author = None, None, None
+            #     while True:
+            #         line = fp.readline()
+            #         if not line:
+            #             break
+            #         line = line.strip()
+            #         if date_time(line):
+            #             if len(messageBuffer) > 0:
+            #                 data.append([date, time, author, ' '.join(messageBuffer)])
+            #                 messageBuffer.clear()
+            #                 date, time, author, message = getDatapoint(line)
+            #                 messageBuffer.append(message)
+            #             else:
+            #                 messageBuffer.append(line)
+            # df = pd.DataFrame(data, columns=["Date", 'Time', 'Author', 'Message'])
+            # df['Date'] = pd.to_datetime(df['Date'])
+            # df.to_csv(dot+'media/data.csv', index = False)
             #filename = "test1.txt"
             filename = dot + str(baseurls)
 
             # read file by lines
             #file_path = "whatsapp.txt"
             # f = open(filename, 'r')
-            # f = open(filename, encoding="utf8")
-            # data = f.readlines()
-            # f.close()
+            f = open(filename, encoding="utf8")
+            data = f.readlines()
+            f.close()
 
-            # # sanity stats
-            # print('num lines: %s' %(len(data)))
+            # sanity stats
+            print('num lines: %s' %(len(data)))
 
-            # # parse text and create list of lists structure
-            # # remove first whatsapp info message
-            # dataset = data[1:]
-            # cleaned_data = []
-            # for line in dataset:
-            #     # grab the info and cut it out
-            #     date = line.split(",")[0]
-            #     line2 = line[len(date):]
-            #     time = line2.split("-")[0][2:]
-            #     line3 = line2[len(time):]
-            #     name = line3.split(":")[0][4:]
-            #     line4 = line3[len(name):]
-            #     message = line4[6:-1] # strip newline charactor
+            # parse text and create list of lists structure
+            # remove first whatsapp info message
+            dataset = data[1:]
+            cleaned_data = []
+            for line in dataset:
+                # grab the info and cut it out
+                date = line.split(",")[0]
+                line2 = line[len(date):]
+                time = line2.split("-")[0][2:]
+                line3 = line2[len(time):]
+                name = line3.split(":")[0][4:]
+                line4 = line3[len(name):]
+                message = line4[6:-1] # strip newline charactor
 
-            #     #print(date, time, name, message)
-            #     cleaned_data.append([date, time, name, message])
+                #print(date, time, name, message)
+                cleaned_data.append([date, time, name, message])
 
             
-            # # Create the DataFrame 
-            # df = pd.DataFrame(cleaned_data, columns = ['Date', 'Time', 'Name', 'Message']) 
-            # # print(df)
-            # # check formatting 
-
-            # if 0:
-            #     print(df.head())
-            #     print(df.tail())
-            # print(df)
-            # # Save it!
-            # df.to_csv(dot+'media/data.csv', index=False)
-            '''Convert WhatsApp chat log text file to a Pandas dataframe.'''
-
-            # some regex to account for messages taking up multiple lines
-            pat = re.compile(r'^(\d+\/\d+\/\d\d.*?)(?=^^\d+\/\d+\/\d\d\,\*?)', re.S | re.M)
-            with open(filename, encoding = 'utf8') as raw:
-                data = [m.group(1).strip().replace('\n', ' ') for m in pat.finditer(raw.read())]
+            # Create the DataFrame 
+            df = pd.DataFrame(cleaned_data, columns = ['Date', 'Time', 'Name', 'Message']) 
+            print(df)
+            # check formatting 
             
-            sender = []; message = []; datetime = []
-            for row in data:
+            if 0:
+                print(df.head())
+                print(df.tail())
 
-                # timestamp is before the first dash
-                datetime.append(row.split(' - ')[0])
-
-                # sender is between am/pm, dash and colon
-                try:
-                    s = re.search('M - (.*?):', row).group(1)
-                    sender.append(s)
-                except:
-                    sender.append('')
-
-                # message content is after the first colon
-                try:
-                    message.append(row.split(': ', 1)[1])
-                except:
-                    message.append('')
-
-            df = pd.DataFrame(zip(datetime, sender, message), columns=['timestamp', 'sender', 'message'])
-            df['timestamp'] = pd.to_datetime(df.timestamp, format='%m/%d/%y, %I:%M %p')
-
-            # remove events not associated with a sender
-            df = df[df.sender != ''].reset_index(drop=True)
+            # Save it!
             df.to_csv(dot+'media/data.csv', index=False)
-            print('ok')
-
             # df = pd.read_csv(filename, header=0, encoding='utf8', on_bad_lines='skip')
-            # df = pd.read_csv(filename, header=0, encoding='utf8', sep='-',)
             # df = pd.read_csv(filename, header=0, na_values=['NA'], delimiter='\t', encoding='utf8')
             # df = pd.read_csv(filename, header=None, names=['col1', 'col2', 'col3'], encoding='utf8')
             # # df = pd.read_csv(filename, header=None, delimiter='\t', encoding='utf8')
@@ -173,7 +161,6 @@ def upload_txt(request):
                 reader = csv.reader(file)
                 next(reader)  # Advance past the header
                 for row in reader:
-                    print(row)
                     # if len(row) == 1:
                     #     film, _ = Film.objects.get_or_create(title=row[0],)
                     #     film.save()
@@ -187,16 +174,20 @@ def upload_txt(request):
                     #     filmurl=row[2],)
                     #     film.save()
                     # elif len(row) == 4:
-                        # print(row)
-                        # print(len(row))
+                    #     # print(row)
+                    #     # print(len(row))
 
-                        # genre, _ = Genre.objects.get_or_create(name=row[0])
-                    print('passed')
-                    # film, _ = Film.objects.get_or_create(title=row[0],
-                    film, _ = Film.objects.get_or_create(title=row[0],                                   
-                    year=row[1],
-                    filmurl=row[2],)
-                    # genre=row[3],)
+                    #     # genre, _ = Genre.objects.get_or_create(name=row[0])
+
+                    #     film, _ = Film.objects.get_or_create(title=row[0],
+                    #     year=row[1],
+                    #     filmurl=row[2],
+                    #     genre=row[3],)
+                    #     film.save()
+                    film, _ = Film.objects.get_or_create(title=row[0],
+                        year=row[1],
+                        filmurl=row[2],
+                        genre=row[3],)
                 film.save()
                 if os.path.exists(filename):
                     os.remove(filename)
