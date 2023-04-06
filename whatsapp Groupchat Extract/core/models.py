@@ -10,6 +10,7 @@ class Film(models.Model):
     title = models.TextField(blank=True)
     year = models.TextField(blank=True)
     filmurl = models.TextField(blank=True)
+    checkstatus = models.PositiveSmallIntegerField(default=0)
     # genre = models.TextField(blank=True)
     # genre = models.ForeignKey(Genre, on_delete=models.CASCADE)
     

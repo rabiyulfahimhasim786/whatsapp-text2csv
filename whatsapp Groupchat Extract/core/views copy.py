@@ -245,7 +245,6 @@ def edit(request,id):
 
 def update(request,id):
     object=Film.objects.get(id=id)
-    # print(object)
     form=FilmForm(request.POST,instance=object)
     if request.method == 'POST':
         if form.is_valid():
@@ -319,15 +318,3 @@ class Product_view(View):
                 obj = get_object_or_404(Film, id = id)
                 obj.delete()
             return redirect('retrieve')
-
-
-def status(request,id):
-    # status = Film.objects.get(id=pk)
-    # w = Film.objects.get(id=request.POST['id'])
-    # w.is_working = request.POST['checkstatus'] == '1'
-    # w.save()
-    status = Film.objects.get(id=id)
-    status.checkstatus^= 1
-    status.save()
-    return redirect(request.META['HTTP_REFERER'])
-    
