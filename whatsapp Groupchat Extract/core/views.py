@@ -305,6 +305,7 @@ from django.views.generic import View
 class Product_view(View):
     
     def get(self, request):
+        # allproduct=Film.objects.all().order_by('-id')
         allproduct=Film.objects.all().order_by('-id')
         context={
             'details':allproduct
@@ -327,6 +328,7 @@ def status(request,id):
     # w.is_working = request.POST['checkstatus'] == '1'
     # w.save()
     status = Film.objects.get(id=id)
+    print(status)
     status.checkstatus^= 1
     status.save()
     return redirect(request.META['HTTP_REFERER'])
