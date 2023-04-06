@@ -204,6 +204,10 @@ input:checked + .slider:before {
                         <label>Chat</label>
                         <textarea class="field-long field-textarea" name="filmurl">{{object.filmurl}}</textarea>
                     </li>
+                    <li>
+                      <label>Status</label>
+                      <textarea class="field-long field-textarea" name="checkstatus">{{object.checkstatus}}</textarea>
+                  </li>
                     <!-- <li>
                         <label>Status</label>
                         <textarea class="field-long field-textarea" name="checkstatus">{{object.checkstatus}}</textarea>
@@ -228,26 +232,36 @@ input:checked + .slider:before {
                                 </label>
                               </a>
                             </div> -->
-                            <div style="display:inline-block">
+                            <!-- working switch -->
+                            <!-- <div style="display:inline-block">
                               <label>Page Status</label>
                               <div class="ontwbt">
-                              <a class="onetwobtn" href="{% url 'status' object.id %}">Status {{object.checkstatus}} </a></div>
+                              <a class="onetwobtn" href="{% url 'status' object.id %}">Status {{object.checkstatus}} </a></div></div> -->
                               <!-- <label>Currently working here?{{object.checkstatus}} </label> -->
                               
                               <!-- <label class="switch">
                                   <input type="checkbox" id="checkbox" value="{{object.checkstatus}}">
                                   <span class="slider round"></span>
                               </label> -->
-                          </div>
+                          
                             
                     </li>
                     <li>
                         <button class="subbtn">Submit</button>
                     </li>
+                    
                 </ul>
             </form>
-            <script src="https://code.jquery.com/jquery-3.3.1.js"></script> <!-- Import Jquery Here-->
-<script type="text/javascript">
+            <ul>
+              <li>
+                <div style="display:inline-block">
+                  <label>Page Status</label>
+                  <div class="ontwbt">
+                  <a class="onetwobtn" href="{% url 'status' object.id %}">Status {{object.checkstatus}} </a></div></div>
+              </li>
+            </ul>
+            <!-- <script src="https://code.jquery.com/jquery-3.3.1.js"></script> -->
+<!-- <script type="text/javascript">
 $(document).ready(function() {
     $('#checkbox').change(function() {
         $.post("/status/", {
@@ -257,7 +271,7 @@ $(document).ready(function() {
         });
     });
 }); 
-</script>
+</script> -->
         </div>
        </div>
     </div>
