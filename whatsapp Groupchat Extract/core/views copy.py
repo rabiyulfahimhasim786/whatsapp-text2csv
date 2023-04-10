@@ -41,8 +41,8 @@ def getDatapoint(line):
     else:
         author= None
     return date, time, author, message
-# dot='./media/'
-dot = '/var/www/subdomain/whatsappdata/analysis/media/'
+dot='./media/'
+# dot = '/var/www/subdomain/whatsappdata/analysis/media/'
 def index(requests):
     documents = whatsapp.objects.all()
     for obj in documents:

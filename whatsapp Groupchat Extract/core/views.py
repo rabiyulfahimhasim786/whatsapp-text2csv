@@ -14,6 +14,9 @@ from .models import whatsapp, Film
 from .forms import WhatsappForm, FilmForm
 import os
 import re
+from django.db.models import Q
+from rest_framework.generics import (ListCreateAPIView,
+                                     RetrieveUpdateDestroyAPIView)
 def date_time(s):
     pattern = '^([0-9]+)(\/)([0-9]+)(\/)([0-9]+), ([0-9]+):([0-9]+)[ ]?(AM|PM|am|pm)? -'
     result = regex.match(pattern, s)
@@ -234,9 +237,9 @@ def indexhtml(request):
     filmes = Film.objects.all()
     return render(request, 'films.html', { 'filmes': filmes })
 
-def retrieve(request):
-    details=Film.objects.all().order_by('-id')
-    return render(request,'retrieve.html',{'details':details})
+# def retrieve(request):
+#     details=Film.objects.all().order_by('-id')
+#     return render(request,'retrieve.html',{'details':details})
 
 def edit(request,id):
     object=Film.objects.get(id=id)
@@ -244,6 +247,7 @@ def edit(request,id):
 
 def update(request,id):
     object=Film.objects.get(id=id)
+    # print(object)
     form=FilmForm(request.POST,instance=object)
     if request.method == 'POST':
         if form.is_valid():
@@ -270,3 +274,160 @@ def delete(request, id):
         return redirect('retrieve')
  
     return render(request, "delete.html", context)
+
+# def searchview(request):
+#     if 'search' in request.GET:
+#         search_term = request.GET['search']
+#         search_result = whatsapp.objects.all().filter(chat__icontains=search_term)
+#         return render(request, 'overview.html', {'articles' : articles, 'search_result': search_result })  
+#     search_result = "Not Found"
+#     articles = whatsapp.objects.all()
+#     return render(request, 'overview.html', {'articles' : articles, 'search_result': search_result })    
+
+
+#search box for django
+def search(request):
+    if 'q' in request.GET:
+        q = request.GET['q']
+        # data = Film.objects.filter(filmurl__icontains=q)
+        multiple_q = Q(Q(year__icontains=q) | Q(filmurl__icontains=q))
+        details = Film.objects.filter(multiple_q)
+        # object=Film.objects.get(id=id)
+    else:
+        details = Film.objects.all().order_by('-id')
+    context = {
+        'details': details
+    }
+    return render(request, 'search.html', context)
+
+#check box delete
+from django.views.generic import View
+# from core import Film
+
+class Product_view(View):
+    
+    def get(self, request):
+        # allproduct=Film.objects.all().order_by('-id')
+        allproduct=Film.objects.all().order_by('-id')
+        context={
+            'details':allproduct
+        }
+        # queryset = Film.objects.filter(checkstatus__in=str(0))
+        # print(queryset)
+        return render(request, "retrieve.html", context)
+    def post(self, request, *args, **kwargs):
+        # if request.method=="POST":
+        #     product_ids=request.POST.getlist('id[]')
+        #     # if product_ids == product_ids:
+        #     product_ids=request.POST.getlist('id[]')
+        #     print(product_ids)
+        #     for id in product_ids:
+        #         # product = Film.object.get(pk=id)
+        #         obj = get_object_or_404(Film, id = id)
+        #         obj.delete()
+        #     return redirect('retrieve')
+         if request.method=="POST":
+            product_ids=request.POST.getlist('id[]')
+            # if product_ids == product_ids:
+            snippet_ids=request.POST.getlist('ids[]')
+            print(product_ids)
+            print(snippet_ids)
+            if 'id[]' in request.POST:
+                print(product_ids)
+                for id in product_ids:
+                    # product = Film.object.get(pk=id)
+                    obj = get_object_or_404(Film, id = id)
+                    obj.delete()
+                return redirect('retrieve')
+            elif 'ids[]' in request.POST:
+                # snippet_ids=request.POST.getlist('ids[]')
+                print(snippet_ids)
+                for id in snippet_ids:
+                    # product = Film.object.get(pk=id)
+                    # obj = get_object_or_404(Film, id = id)
+                    # obj.delete()
+                    print(id)
+                    status = Film.objects.get(id=id)
+                    print(status)
+                    status.checkstatus^= 1
+                    status.save()
+                return redirect('retrieve')
+            else:
+                return redirect('retrieve')
+
+                
+
+
+
+        # else:
+        #     print('working snippet')
+        #     snippet_ids=request.POST.getlist('ids[]')
+        #     print(snippet_ids)
+        #     for id in snippet_ids:
+        #         # product = Film.object.get(pk=id)
+        #         # obj = get_object_or_404(Film, id = id)
+        #         # obj.delete()
+        #          print(id)
+        #          status = Film.objects.get(id=id)
+        #          print(status)
+        #          status.checkstatus^= 1
+        #          status.save()
+        #     return redirect('retrieve')
+
+
+    # def posting(self, request, *args, **kwargs):
+    #     if request.method=="POST":
+    #         snippet_ids=request.POST.getlist('ids[]')
+    #         print(snippet_ids)
+    #         for id in snippet_ids:
+    #             # product = Film.object.get(pk=id)
+    #             # obj = get_object_or_404(Film, id = id)
+    #             # obj.delete()
+    #              print(id)
+    #              status = Film.objects.get(id=id)
+    #              print(status)
+    #              status.checkstatus^= 1
+    #              status.save()
+    #         return redirect(request.META['HTTP_REFERER'])
+    
+
+
+def status(request,id):
+    # status = Film.objects.get(id=pk)
+    # w = Film.objects.get(id=request.POST['id'])
+    # w.is_working = request.POST['checkstatus'] == '1'
+    # w.save()
+    status = Film.objects.get(id=id)
+    print(status)
+    status.checkstatus^= 1
+    status.save()
+    return redirect(request.META['HTTP_REFERER'])
+    
+
+from core.serializers import SnippetSerializer
+class SnippetList(ListCreateAPIView):
+    serializer_class = SnippetSerializer
+
+    def get_queryset(self):
+
+        # Get URL parameter as a string, if exists 
+        ids = self.request.query_params.get('ids', None)
+        print(ids)
+        # Get snippets for ids if they exist
+        if ids is not None:
+            # Convert parameter string to list of integers
+            ids = [ int(x) for x in ids.split(',') ]
+            # Get objects for all parameter ids 
+            queryset = Film.objects.filter(pk__in=ids)
+
+        else:
+            # Else no parameters, return all objects
+            queryset = Film.objects.all()
+
+        return queryset
+
+    def get_list_filter(self):
+        queryset = Film.objects.all()
+        # queryset = Film.objects.filter(checkstatus__in=str(1))
+        print(queryset)
+        return queryset
