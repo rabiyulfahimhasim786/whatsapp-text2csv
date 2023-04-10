@@ -12,6 +12,7 @@ import matplotlib.pyplot as plt
 #from wordcloud import WordCloud, STOPWORDS, ImageColorGenerator
 from .models import whatsapp, Film
 from .forms import WhatsappForm, FilmForm
+from rest_framework.response import Response
 import os
 import re
 from django.db.models import Q
@@ -253,8 +254,10 @@ def update(request,id):
         if form.is_valid():
             form.save()
             # object=Film.objects.all()
-            return redirect('retrieve')
-    return redirect('retrieve')
+            # return redirect('retrieve')
+            redirect(request.META['HTTP_REFERER'])
+    # return redirect('retrieve')
+    redirect(request.META['HTTP_REFERER'])
 
 def delete(request, id):
     # dictionary for initial data with
@@ -408,26 +411,77 @@ from core.serializers import SnippetSerializer
 class SnippetList(ListCreateAPIView):
     serializer_class = SnippetSerializer
 
+    # def get_queryset(self):
+    #     # Get URL parameter as a string, if exists 
+    #     ids = self.request.query_params.get('ids', None)
+    #     print(ids)
+    #     # Get snippets for ids if they exist
+    #     if ids is not None:
+    #         # try:
+    #         # Convert parameter string to list of integers
+    #         ids = [ int(x) for x in ids.split(',') ]
+    #         # Get objects for all parameter ids 
+    #         # queryset = Film.objects.filter(pk__in=ids)
+    #         for id in ids:
+    #             status = Film.objects.get(id=id)
+    #             print(status)
+    #             # queryset = get_object_or_404(Film, pk__in=str(id))
+    #             if int(status.checkstatus) == 1:
+    #                     status.checkstatus^= 1
+    #                     print(status.checkstatus)
+    #                     status.save()
+    #             # queryset = get_object_or_404(Film, pk__in= str(id))
+    #         queryset = Film.objects.filter(pk__in=ids)
+    #         # queryset = Film.objects.filter(checkstatus__in=str(0))
+    #         return queryset
+    #         # except:
+    #         #     return Response({"status": "Notfound"})
+    #     else:
+    #         # Else no parameters, return all objects
+    #         queryset = Film.objects.all()
+    #         return queryset
+    #         # return queryset
+    #         # queryset = Film.objects.filter(checkstatus__in=str(1))
+
+        # return queryset
+
+    # def get_list_filter(self):
+    #     queryset = Film.objects.all()
+    #     # queryset = Film.objects.filter(checkstatus__in=str(1))
+    #     print(queryset)
+    #     return queryset
+
+
+    
     def get_queryset(self):
-
-        # Get URL parameter as a string, if exists 
-        ids = self.request.query_params.get('ids', None)
-        print(ids)
-        # Get snippets for ids if they exist
-        if ids is not None:
-            # Convert parameter string to list of integers
-            ids = [ int(x) for x in ids.split(',') ]
-            # Get objects for all parameter ids 
-            queryset = Film.objects.filter(pk__in=ids)
-
-        else:
-            # Else no parameters, return all objects
-            queryset = Film.objects.all()
-
-        return queryset
-
-    def get_list_filter(self):
-        queryset = Film.objects.all()
-        # queryset = Film.objects.filter(checkstatus__in=str(1))
-        print(queryset)
-        return queryset
+        try:
+            # Get URL parameter as a string, if exists 
+            ids = self.request.query_params.get('ids', None)
+            print(ids)
+            # Get snippets for ids if they exist
+            if ids is not None:
+                # Convert parameter string to list of integers
+                ids = [ int(x) for x in ids.split(',') ]
+                # Get objects for all parameter ids 
+                # queryset = Film.objects.filter(pk__in=ids)
+                for id in ids:
+                    status = Film.objects.get(id=id)
+                    print(status)
+                    if int(status.checkstatus) == 1:
+                            status.checkstatus^= 1
+                            print(status.checkstatus)
+                            status.save()
+                    # queryset = get_object_or_404(Film, pk__in= str(id))
+                queryset = Film.objects.filter(pk__in=ids)
+                # queryset = Film.objects.filter(checkstatus__in=str(0))
+                return queryset
+            else:
+                # Else no parameters, return all objects
+                queryset = Film.objects.all()
+                # queryset = Film.objects.filter(checkstatus__in=str(1))
+                return queryset
+        except:
+            # return None
+            return Response({
+                "details": None
+            }),
