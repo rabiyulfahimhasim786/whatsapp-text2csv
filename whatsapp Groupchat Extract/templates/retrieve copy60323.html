@@ -76,9 +76,6 @@
         <div>
             <button type="submit" id="delete_btn" class="btn_delete">Delete</button>
         </div>
-        <div>
-            <button type="submit" id="snippet_btn" class="btn_snippet">Status</button>
-        </div>
         <table class="retrieve_table" border="5px solid #000;">
             <tbody>
                 <thead>
@@ -95,8 +92,8 @@
                 <tbody>
                     {%csrf_token %}
                     {% for i in details %}
-                   
-                    {% if i.checkstatus == 1 %}
+                    <!-- {% if i.checkstatus == 1 %} -->
+                    
                     <tr id="{{i.id}}">
                         <td><input type="checkbox" name="product_id[]" value="{{i.id}}" id="retrieve"></td>
                         <td style="padding:10px;">{{i.title}}</td>
@@ -106,7 +103,7 @@
                         <td style="padding:10px;text-align: center;"><a class="editbtn" href="{% url 'edit' i.pk %}">Edit</a></td>
                         <td style="padding:10px;text-align: center;"><a class="deletebtn" href="{% url 'delete' i.pk %}">Delete</a></td>
                     </tr>
-                    {% endif %}
+                    <!-- {% endif %} -->
                     {% endfor %}
                 </tbody>
             </tbody>
@@ -149,40 +146,6 @@
             })
         })
     </script>
-    <script>
-        $(document).ready(function(){
-            $('#snippet_btn').click(function(){
-                if(confirm("Are you sure you want to change this status ?")){
-                    var ids =[];
-                    var csrf=$('input[name=csrfmiddlewaretoken').val();
-                    $(':checkbox:checked').each(function(i){
-                        ids[i]=$(this).val()
-                    })
-                    if(ids.length===0){
-                        alert("please select item to change status ?")
-                    }else{
-                        console.log(ids)
-                        $.ajax({
-                            url:'.',
-                            method:"POST",
-                            data:{
-                                ids,
-                                csrfmiddlewaretoken:csrf
-                            },
-                            success:function(response){
-                                for(var i=0; i < ids.length; i++){
-                                $('tr#'+ids[i]+'').css('background-color', '#ccc');
-                                $('tr#'+ids[i]+'').fadeOut('slow');
-                                window.location.href = '/retrieve'
-                            }                               
-                            }
-                        })
-                    }                  
-                }
-            })
-        })
-    </script>
-
 </body>
 
 </html>
