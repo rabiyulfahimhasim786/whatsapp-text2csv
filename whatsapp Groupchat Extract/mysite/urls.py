@@ -22,6 +22,7 @@ from core import views
 urlpatterns = [
     path('', include('core.urls')),
     path('admin/', admin.site.urls),
+    path('chatgpt/', include('chatgpt.urls'))
 ]
 
 if settings.DEBUG:
