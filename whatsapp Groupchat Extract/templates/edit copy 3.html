@@ -41,14 +41,6 @@
     border-radius: 10px;
     color: #fff;
     width: 99.6%;
-    cursor: pointer;
-}
-/* .subbtn:hover {
-  background: #025822;
-} */
-.add_btn_class {
-  content: "plz wait";
-  background: #025822;
 }
 .back {
     background: #0b9b3f;
@@ -241,7 +233,7 @@ input:checked + .slider:before {
                     <!-- <textarea class="field-long field-textarea" name="checkstatus">{{object.checkstatus}}</textarea> -->
                     <!-- <input type="text" class="field-long field-textarea" name="dropdownlist" value="{{object.dropdownlist}}"> -->
                     <label for="id_locations">Label:</label>
-                    <select  name="dropdownlist" id="dropdownlist" class="" required="" onchange="add_class_onchange()">
+                    <select  name="dropdownlist" class="" required="" onchange="add_class()">
                     <option  value="" selected="">---------</option>
               
                     <option value="Benchsales">Benchsales</option>
@@ -338,16 +330,11 @@ $(document).ready(function() {
 </script> -->
 <script>
 
-  function add_class_onchange(){
-        var status = this.value;
-        // alert(status);
-        if(status != "")
-        var element = document.getElementById("add_class");
-        element.classList.add("add_btn_class");
-      
+  function add_class(){
+    alert('gg');
   }
 
-
+  
 // $(function(){
 
 // $("#status").change(function(){

@@ -63,52 +63,100 @@
         text-overflow: ellipsis;
         border: none;
     }
+    
     </style>
+    <!-- <script type="text/javascript">
+        function searchdata(){
+            var input,table,tr,td,filter,i;
+            input = document.getElementById("searchdd1");
+            filter = input.value;
+            table = document.getElementById("table1");
+            tr= table.getElementsByTagName("tr")
+            for(i=0;i<tr.length;i++)
+            {
+                td=tr[i].getElementsByTagName("td")[500];
+                if(td)
+                {
+                    displaydata = td.innertext;
+                    if(displaydata.indexof(filter)>-1)
+                    {
+                        tr[i].style.display="";
+                    }
+                    else
+                    {
+                        tr[i].style.display="none";
+                    }
+
+                }
+            }
+        }
+        function resettabledata();
+        {
+            location.load();
+        }
+    </script> -->
 </head>
 
-<body>
+  <body>
     {% include 'header.html' %}
-    <!-- <form class="form-inline my-2 my-lg-0" >
-        <input class="form-control mr-sm-2" name="q" type="search" placeholder="Search" aria-label="Search">
-        <button class="btn btn-outline-success my-2 my-sm-0" type="submit">Search</button>
-      </form> -->
     <div class="container">
-        <div>
+        <form class="form-inline my-2 my-lg-0" >
+            <input class="form-control mr-sm-2" name="q" type="search" placeholder="Search" aria-label="Search">
+            <button class="btn btn-outline-success my-2 my-sm-0" type="submit">Search</button>
+          </form>
+          <!-- <div>
+            <select id="searchdd1" onclick="searchdata();">
+                <option disabled="true" selected>-----</option>
+                <option value="0">0</option>
+                <option value="1">1</option>
+            </select>
+            <input type="button" value="Reset Table" onclick=""/>
+          </div> -->
+          <div>
+            <form method="get" action="{% url 'locations' %}">
+                {{ location_list }}
+                <!-- <label for="id_locations">Locations:</label><select name="locations" required="" id="id_locations">
+                    <option value="" selected="">---------</option>
+                  
+                    <option value="1">1</option>
+                  
+                    <option value="0">0</option> -->
+                <input type="submit" >
+            </form>
+          </div>
+          <!-- <div>
             <button type="submit" id="delete_btn" class="btn_delete">Delete</button>
-        </div>
-        <div>
-            <button type="submit" id="snippet_btn" class="btn_snippet">Status</button>
-        </div>
+        </div> -->
+        
         <table class="retrieve_table" border="5px solid #000;">
             <tbody>
                 <thead>
                     <tr>
-                        <th width="15%"></th>
+                        <!-- <th width="15%"></th> -->
                         <th width="15%">Date and Time</th>
                         <th width="15%">Name</th>
                         <th width="50%">Message</th>
-                        <th>Label</th>
-                        <!-- <th>Message</th> -->
+                        <th>status</th>
                         <th width="10%">Edit</th>
                         <th width="10%">Delete</th>
                     </tr>
                 </thead>
                 <tbody>
-                    {%csrf_token %}
+                    <!-- {%csrf_token %} -->
+                    
                     {% for i in details %}
-                   
-                    {% if i.checkstatus == 1 %}
-                    <tr id="{{i.id}}">
-                        <td><input type="checkbox" name="product_id[]" value="{{i.id}}" id="retrieve"></td>
+                    
+                    <tr>
+                    <!-- <tr  id="{{i.id}}"> -->
+                        <!-- <td><input type="checkbox" name="product_id[]" value="{{i.id}}" id="delete_product"></td> -->
                         <td style="padding:10px;">{{i.title}}</td>
                         <td style="padding:10px;">{{i.year}}</td>
                         <td style="padding:10px;">{{i.filmurl}}</td>
-                        <td style="padding:10px;">{{i.dropdownlist}}</td>
+                        <td style="padding:10px;">{{i.checkstatus}}</td>
                         <!-- <td style="padding:10px;" class="meg">{{i.genre}}</td> -->
                         <td style="padding:10px;text-align: center;"><a class="editbtn" href="{% url 'edit' i.pk %}">Edit</a></td>
                         <td style="padding:10px;text-align: center;"><a class="deletebtn" href="{% url 'delete' i.pk %}">Delete</a></td>
                     </tr>
-                    {% endif %}
                     {% endfor %}
                 </tbody>
             </tbody>
@@ -117,7 +165,7 @@
             <button type="submit" id="delete_btn" class="btn_delete">Delete</button>
         </div> -->
     </div>
-    <script src="https://code.jquery.com/jquery-2.2.4.min.js"></script>
+    <!-- <script src="https://code.jquery.com/jquery-2.2.4.min.js"></script>
     <script>
         $(document).ready(function(){
             $('#delete_btn').click(function(){
@@ -142,7 +190,6 @@
                                 for(var i=0; i < id.length; i++){
                                 $('tr#'+id[i]+'').css('background-color', '#ccc');
                                 $('tr#'+id[i]+'').fadeOut('slow');
-                                window.location.href = '/retrieve'
                             }                               
                             }
                         })
@@ -150,40 +197,7 @@
                 }
             })
         })
-    </script>
-    <script>
-        $(document).ready(function(){
-            $('#snippet_btn').click(function(){
-                if(confirm("Are you sure you want to change this status ?")){
-                    var ids =[];
-                    var csrf=$('input[name=csrfmiddlewaretoken').val();
-                    $(':checkbox:checked').each(function(i){
-                        ids[i]=$(this).val()
-                    })
-                    if(ids.length===0){
-                        alert("please select item to change status ?")
-                    }else{
-                        console.log(ids)
-                        $.ajax({
-                            url:'.',
-                            method:"POST",
-                            data:{
-                                ids,
-                                csrfmiddlewaretoken:csrf
-                            },
-                            success:function(response){
-                                for(var i=0; i < ids.length; i++){
-                                $('tr#'+ids[i]+'').css('background-color', '#ccc');
-                                $('tr#'+ids[i]+'').fadeOut('slow');
-                                window.location.href = '/retrieve'
-                            }                               
-                            }
-                        })
-                    }                  
-                }
-            })
-        })
-    </script>
+    </script> -->
 
 </body>
 

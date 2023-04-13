@@ -41,14 +41,6 @@
     border-radius: 10px;
     color: #fff;
     width: 99.6%;
-    cursor: pointer;
-}
-/* .subbtn:hover {
-  background: #025822;
-} */
-.add_btn_class {
-  content: "plz wait";
-  background: #025822;
 }
 .back {
     background: #0b9b3f;
@@ -202,7 +194,6 @@ input:checked + .slider:before {
     /* width: 99.6%; */
     text-decoration: none;
 }
-
 </style>
 </head>
 
@@ -211,8 +202,7 @@ input:checked + .slider:before {
 
             <div class="bord_box">
                 <div class="back_btnn">
-                    <a class="back" href="{% url 'retrieve' %}">Check data</a>
-                    <a class="back" href="{% url 'search' %}">Search</a>
+                    <a class="back" href="{% url 'retrieve' %}">Back</a>
                 </div>
             <form action="/update/{{object.id}}" method="POST">
                 {% csrf_token %}
@@ -237,33 +227,16 @@ input:checked + .slider:before {
                       <input type="text" class="field-long field-textarea" name="checkstatus" value="{{object.checkstatus}}">
                   </li>
                   <li>
-                    <label></label>
+                    <label>Label</label>
                     <!-- <textarea class="field-long field-textarea" name="checkstatus">{{object.checkstatus}}</textarea> -->
                     <!-- <input type="text" class="field-long field-textarea" name="dropdownlist" value="{{object.dropdownlist}}"> -->
-                    <label for="id_locations">Label:</label>
-                    <select  name="dropdownlist" id="dropdownlist" class="" required="" onchange="add_class_onchange()">
-                    <option  value="" selected="">---------</option>
-              
-                    <option value="Benchsales">Benchsales</option>
+                    <label for="id_locations">Label:</label><select name="dropdownlist" required="" id="id_dropdownlist">
+                    <option value="" selected="">---------</option>
                   
-                    <option value="Requirements">Requirements</option>
-
-                    <option value="3rd party Job posting & Recruitment">3rd party Job posting & Recruitment</option>
-                    <option value="Web content">Web content</option>
-                    <option value="Blog">Blog</option>
-                    <option value="Training">Training</option>
-                    <option value="Presentation">Presentation</option>
-                    <option value="Interview questions">Interview questions</option>
-                    <option value="Misc">Misc</option>
-                      <button class="subbtn">Submit</button>
+                    <option value="1">Benachsales</option>
                   
-                    </select>
+                    <option value="0">Requirements</option>
                 </li>
-                <li>
-                  <button id="add_class" class="subbtn">Submit</button>
-                  <!-- <a href="#">Test</a> -->
-                </li>
-                  
                   <!-- <li>
                     <label>Status</label>
                     
@@ -283,7 +256,7 @@ input:checked + .slider:before {
                         <textarea class="field-long field-textarea" name='genre'>{{object.genre}}</textarea>
                     </li> -->
                     <li>
-                    
+                        
                           <!-- <label>Currently working here?{{object.checkstatus}}</label>
                           <label class="switch">
                             <input class="field-long field-textarea" type="checkbox" name='checkstatus'>
@@ -312,7 +285,9 @@ input:checked + .slider:before {
                           
                             
                     </li>
-                    
+                    <li>
+                        <button class="subbtn">Submit</button>
+                    </li>
                     
                 </ul>
             </form>
@@ -336,30 +311,6 @@ $(document).ready(function() {
     });
 }); 
 </script> -->
-<script>
-
-  function add_class_onchange(){
-        var status = this.value;
-        // alert(status);
-        if(status != "")
-        var element = document.getElementById("add_class");
-        element.classList.add("add_btn_class");
-      
-  }
-
-
-// $(function(){
-
-// $("#status").change(function(){
-//     var status = this.value;
-//     alert(status);
-//     if(status != "")
-//     var element = document.getElementById("add_class");
-//         element.classList.add("Your class name");
-//     });
-
-// });
-</script>
         </div>
        </div>
     </div>

@@ -11,10 +11,13 @@ from django.shortcuts import get_object_or_404
 import matplotlib.pyplot as plt
 #from wordcloud import WordCloud, STOPWORDS, ImageColorGenerator
 from .models import whatsapp, Film
-from .forms import WhatsappForm, FilmForm
+from .forms import WhatsappForm, FilmForm, LocationChoiceField, LabelChoiceField
+from rest_framework.response import Response
 import os
 import re
 from django.db.models import Q
+from rest_framework.generics import (ListCreateAPIView,
+                                     RetrieveUpdateDestroyAPIView)
 def date_time(s):
     pattern = '^([0-9]+)(\/)([0-9]+)(\/)([0-9]+), ([0-9]+):([0-9]+)[ ]?(AM|PM|am|pm)? -'
     result = regex.match(pattern, s)
@@ -41,8 +44,8 @@ def getDatapoint(line):
     else:
         author= None
     return date, time, author, message
-dot='./media/'
-# dot = '/var/www/subdomain/whatsappdata/analysis/media/'
+# dot='./media/'
+dot = '/var/www/subdomain/whatsappdata/analysis/media/'
 def index(requests):
     documents = whatsapp.objects.all()
     for obj in documents:
@@ -241,18 +244,24 @@ def indexhtml(request):
 
 def edit(request,id):
     object=Film.objects.get(id=id)
-    return render(request,'edit.html',{'object':object})
+    # sources = (0, 1)
+    return render(request,'edit.html',{'object':object,}) #'sources': sources})
+from django.http import HttpResponseRedirect
 
 def update(request,id):
     object=Film.objects.get(id=id)
-    # print(object)
+    print(object)
     form=FilmForm(request.POST,instance=object)
     if request.method == 'POST':
         if form.is_valid():
             form.save()
             # object=Film.objects.all()
-            return redirect('retrieve')
-    return redirect('retrieve')
+            # return redirect('retrieve')
+            # return HttpResponseRedirect(request.META.get('HTTP_REFERER'))
+            return redirect(request.META['HTTP_REFERER'])
+    # return redirect('retrieve')
+    # return HttpResponseRedirect(request.META.get('HTTP_REFERER'))
+    return redirect(request.META['HTTP_REFERER'])
 
 def delete(request, id):
     # dictionary for initial data with
@@ -285,16 +294,26 @@ def delete(request, id):
 
 #search box for django
 def search(request):
+    location_list = LocationChoiceField()
+    label_list = LabelChoiceField()
     if 'q' in request.GET:
         q = request.GET['q']
         # data = Film.objects.filter(filmurl__icontains=q)
         multiple_q = Q(Q(year__icontains=q) | Q(filmurl__icontains=q))
         details = Film.objects.filter(multiple_q)
         # object=Film.objects.get(id=id)
+    elif request.GET.get('locations'):
+        selected_location = request.GET.get('locations')
+        details = Film.objects.filter(checkstatus=selected_location)
+    elif request.GET.get('label'):
+        labels = request.GET.get('label')
+        details = Film.objects.filter(dropdownlist=labels)
     else:
         details = Film.objects.all().order_by('-id')
     context = {
-        'details': details
+        'details': details,
+        'location_list': location_list,
+        'label_list': label_list
     }
     return render(request, 'search.html', context)
 
@@ -310,16 +329,84 @@ class Product_view(View):
         context={
             'details':allproduct
         }
+        # queryset = Film.objects.filter(checkstatus__in=str(0))
+        # print(queryset)
         return render(request, "retrieve.html", context)
     def post(self, request, *args, **kwargs):
-        if request.method=="POST":
+        # if request.method=="POST":
+        #     product_ids=request.POST.getlist('id[]')
+        #     # if product_ids == product_ids:
+        #     product_ids=request.POST.getlist('id[]')
+        #     print(product_ids)
+        #     for id in product_ids:
+        #         # product = Film.object.get(pk=id)
+        #         obj = get_object_or_404(Film, id = id)
+        #         obj.delete()
+        #     return redirect('retrieve')
+         if request.method=="POST":
             product_ids=request.POST.getlist('id[]')
+            # if product_ids == product_ids:
+            snippet_ids=request.POST.getlist('ids[]')
             print(product_ids)
-            for id in product_ids:
-                # product = Film.object.get(pk=id)
-                obj = get_object_or_404(Film, id = id)
-                obj.delete()
-            return redirect('retrieve')
+            print(snippet_ids)
+            if 'id[]' in request.POST:
+                print(product_ids)
+                for id in product_ids:
+                    # product = Film.object.get(pk=id)
+                    obj = get_object_or_404(Film, id = id)
+                    obj.delete()
+                return redirect('retrieve')
+            elif 'ids[]' in request.POST:
+                # snippet_ids=request.POST.getlist('ids[]')
+                print(snippet_ids)
+                for id in snippet_ids:
+                    # product = Film.object.get(pk=id)
+                    # obj = get_object_or_404(Film, id = id)
+                    # obj.delete()
+                    print(id)
+                    status = Film.objects.get(id=id)
+                    print(status)
+                    status.checkstatus^= 1
+                    status.save()
+                return redirect('retrieve')
+            else:
+                return redirect('retrieve')
+
+                
+
+
+
+        # else:
+        #     print('working snippet')
+        #     snippet_ids=request.POST.getlist('ids[]')
+        #     print(snippet_ids)
+        #     for id in snippet_ids:
+        #         # product = Film.object.get(pk=id)
+        #         # obj = get_object_or_404(Film, id = id)
+        #         # obj.delete()
+        #          print(id)
+        #          status = Film.objects.get(id=id)
+        #          print(status)
+        #          status.checkstatus^= 1
+        #          status.save()
+        #     return redirect('retrieve')
+
+
+    # def posting(self, request, *args, **kwargs):
+    #     if request.method=="POST":
+    #         snippet_ids=request.POST.getlist('ids[]')
+    #         print(snippet_ids)
+    #         for id in snippet_ids:
+    #             # product = Film.object.get(pk=id)
+    #             # obj = get_object_or_404(Film, id = id)
+    #             # obj.delete()
+    #              print(id)
+    #              status = Film.objects.get(id=id)
+    #              print(status)
+    #              status.checkstatus^= 1
+    #              status.save()
+    #         return redirect(request.META['HTTP_REFERER'])
+    
 
 
 def status(request,id):
@@ -333,3 +420,111 @@ def status(request,id):
     status.save()
     return redirect(request.META['HTTP_REFERER'])
     
+
+from core.serializers import SnippetSerializer
+class SnippetList(ListCreateAPIView):
+    serializer_class = SnippetSerializer
+
+    # def get_queryset(self):
+    #     # Get URL parameter as a string, if exists 
+    #     ids = self.request.query_params.get('ids', None)
+    #     print(ids)
+    #     # Get snippets for ids if they exist
+    #     if ids is not None:
+    #         # try:
+    #         # Convert parameter string to list of integers
+    #         ids = [ int(x) for x in ids.split(',') ]
+    #         # Get objects for all parameter ids 
+    #         # queryset = Film.objects.filter(pk__in=ids)
+    #         for id in ids:
+    #             status = Film.objects.get(id=id)
+    #             print(status)
+    #             # queryset = get_object_or_404(Film, pk__in=str(id))
+    #             if int(status.checkstatus) == 1:
+    #                     status.checkstatus^= 1
+    #                     print(status.checkstatus)
+    #                     status.save()
+    #             # queryset = get_object_or_404(Film, pk__in= str(id))
+    #         queryset = Film.objects.filter(pk__in=ids)
+    #         # queryset = Film.objects.filter(checkstatus__in=str(0))
+    #         return queryset
+    #         # except:
+    #         #     return Response({"status": "Notfound"})
+    #     else:
+    #         # Else no parameters, return all objects
+    #         queryset = Film.objects.all()
+    #         return queryset
+    #         # return queryset
+    #         # queryset = Film.objects.filter(checkstatus__in=str(1))
+
+        # return queryset
+
+    # def get_list_filter(self):
+    #     queryset = Film.objects.all()
+    #     # queryset = Film.objects.filter(checkstatus__in=str(1))
+    #     print(queryset)
+    #     return queryset
+
+
+    
+    def get_queryset(self):
+        try:
+            # Get URL parameter as a string, if exists 
+            ids = self.request.query_params.get('ids', None)
+            # print(ids)
+            # Get snippets for ids if they exist
+            if ids is not None:
+                # Convert parameter string to list of integers
+                ids = [ int(x) for x in ids.split(',') ]
+                # Get objects for all parameter ids 
+                # queryset = Film.objects.filter(pk__in=ids)
+                for id in ids:
+                    status = Film.objects.get(id=id)
+                    print(status)
+                    if int(status.checkstatus) == 1:
+                            status.checkstatus^= 1
+                            print(status.checkstatus)
+                            status.save()
+                    # queryset = get_object_or_404(Film, pk__in= str(id))
+                queryset = Film.objects.filter(pk__in=ids)
+                # queryset = Film.objects.filter(checkstatus__in=str(0))
+                return queryset
+            else:
+                # Else no parameters, return all objects
+                queryset = Film.objects.all()
+                # queryset = Film.objects.filter(checkstatus__in=str(1))
+                return queryset
+        except:
+            # return None
+            return Response({
+                "details": None
+            }),
+
+
+
+# def locations(request):
+
+
+#     location_list = LocationChoiceField()
+
+#     if request.GET.get('locations'):
+#         selected_location = request.GET.get('locations')
+#         details = Film.objects.filter(checkstatus=selected_location)
+#     elif 'q' in request.GET:
+#         q = request.GET['q']
+#         # data = Film.objects.filter(filmurl__icontains=q)
+#         multiple_q = Q(Q(year__icontains=q) | Q(filmurl__icontains=q))
+#         details = Film.objects.filter(multiple_q)
+#         # object=Film.objects.get(id=id)
+#     # else:
+#     #     details = Film.objects.all().order_by('-id')
+#     else:
+#         details = Film.objects.all().order_by('-id')
+
+
+#     context = {
+#         'query_results': details,
+#         'location_list': location_list,
+
+#     }
+#     return render(request,'locations.html', context)
