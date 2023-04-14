@@ -41,14 +41,6 @@
     border-radius: 10px;
     color: #fff;
     width: 99.6%;
-    cursor: pointer;
-}
-/* .subbtn:hover {
-  background: #025822;
-} */
-.add_btn_class {
-  content: "plz wait";
-  background: #025822;
 }
 .back {
     background: #0b9b3f;
@@ -202,19 +194,7 @@ input:checked + .slider:before {
     /* width: 99.6%; */
     text-decoration: none;
 }
-.optio_n {
-  /* background: #0b9b3f; */
-  border: 1px solid #0b9b3f;
-  height: 30px;
-  border-radius: 8px;
-  margin-bottom: 18px;
-}
-.stat ul li {
-  list-style-type: none;
-}
-.stat {
-visibility: hidden;
-}
+
 </style>
 </head>
 
@@ -223,8 +203,8 @@ visibility: hidden;
 
             <div class="bord_box">
                 <div class="back_btnn">
-                    <a class="back" href="{% url 'retrieve' %}">Back</a>
-                    <!-- <a class="back" href="{% url 'search' %}">Search</a> -->
+                    <a class="back" href="{% url 'retrieve' %}">Check data</a>
+                    <a class="back" href="{% url 'search' %}">Search</a>
                 </div>
             <form action="/update/{{object.id}}" method="POST">
                 {% csrf_token %}
@@ -235,12 +215,12 @@ visibility: hidden;
                         <input type="text" class="field-long field-textarea" name="title" value="{{object.title}}">
                     </li>
                     <li>
-                        <label>Mobile Number</label>
+                        <label>Person</label>
                         <!-- <textarea class="field-long field-textarea" name="year">{{object.year}}</textarea> -->
                         <input type="text" class="field-long field-textarea" name="year" value="{{object.year}}">
                     </li>
                     <li>
-                        <label>Message</label>
+                        <label>Chat</label>
                         <textarea class="field-long field-textarea chat_area" style="height: 150px;" name="filmurl">{{object.filmurl}}</textarea>
                     </li>
                     <li class="statu_s">
@@ -252,8 +232,8 @@ visibility: hidden;
                     <label></label>
                     <!-- <textarea class="field-long field-textarea" name="checkstatus">{{object.checkstatus}}</textarea> -->
                     <!-- <input type="text" class="field-long field-textarea" name="dropdownlist" value="{{object.dropdownlist}}"> -->
-                    <label for="id_locations">Lead Type</label>
-                    <select  name="dropdownlist" id="dropdownlist" class="optio_n" required="" onchange="add_class_onchange()">
+                    <label for="id_locations">Label:</label>
+                    <select  name="dropdownlist" class="" required="" onchange="add_class()">
                     <option  value="" selected="">---------</option>
               
                     <option value="Benchsales">Benchsales</option>
@@ -328,7 +308,6 @@ visibility: hidden;
                     
                 </ul>
             </form>
-            <div class="stat">
             <ul>
               <li>
                 <div style="display:inline-block">
@@ -337,7 +316,6 @@ visibility: hidden;
                   <a class="onetwobtn" href="{% url 'status' object.id %}">Status {{object.checkstatus}} </a></div></div>
               </li>
             </ul>
-          </div>
             <!-- <script src="https://code.jquery.com/jquery-3.3.1.js"></script> -->
 <!-- <script type="text/javascript">
 $(document).ready(function() {
@@ -352,16 +330,11 @@ $(document).ready(function() {
 </script> -->
 <script>
 
-  function add_class_onchange(){
-        var status = this.value;
-        // alert(status);
-        if(status != "")
-        var element = document.getElementById("add_class");
-        element.classList.add("add_btn_class");
-      
+  function add_class(){
+    alert('gg');
   }
 
-
+  
 // $(function(){
 
 // $("#status").change(function(){
