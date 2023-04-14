@@ -11,7 +11,7 @@ from django.shortcuts import get_object_or_404
 import matplotlib.pyplot as plt
 #from wordcloud import WordCloud, STOPWORDS, ImageColorGenerator
 from .models import whatsapp, Film
-from .forms import WhatsappForm, FilmForm, LocationChoiceField
+from .forms import WhatsappForm, FilmForm, LocationChoiceField, LabelChoiceField
 from rest_framework.response import Response
 import os
 import re
@@ -197,11 +197,22 @@ def upload_txt(request):
                         # genre, _ = Genre.objects.get_or_create(name=row[0])
                     print('passed')
                     # film, _ = Film.objects.get_or_create(title=row[0],
-                    film, _ = Film.objects.get_or_create(title=row[0],                                   
-                    year=row[1],
-                    filmurl=row[2],)
-                    # genre=row[3],)
-                film.save()
+                    # film, _ = Film.objects.get_or_create(title=row[0],                                   
+                    # year=row[1],
+                    # filmurl=row[2],)
+                    # # genre=row[3],)
+                    if row[2] == '<Media omitted>':
+                        print(row[2])
+                        continue
+                    elif row[2] == 'Waiting for this message':
+                        print(row[2])
+                        continue
+                    else:
+                        film, _ = Film.objects.get_or_create(title=row[0],                                   
+                        year=row[1],
+                        filmurl=row[2],)
+                        # genre=row[3],)
+                    film.save()
                 if os.path.exists(filename):
                     os.remove(filename)
                 else:
@@ -246,6 +257,7 @@ def edit(request,id):
     object=Film.objects.get(id=id)
     # sources = (0, 1)
     return render(request,'edit.html',{'object':object,}) #'sources': sources})
+from django.http import HttpResponseRedirect
 
 def update(request,id):
     object=Film.objects.get(id=id)
@@ -255,10 +267,12 @@ def update(request,id):
         if form.is_valid():
             form.save()
             # object=Film.objects.all()
-            return redirect('retrieve')
-            # redirect(request.META['HTTP_REFERER'])
-    return redirect('retrieve')
-    # redirect(request.META['HTTP_REFERER'])
+            # return redirect('retrieve')
+            # return HttpResponseRedirect(request.META.get('HTTP_REFERER'))
+            return redirect(request.META['HTTP_REFERER'])
+    # return redirect('retrieve')
+    # return HttpResponseRedirect(request.META.get('HTTP_REFERER'))
+    return redirect(request.META['HTTP_REFERER'])
 
 def delete(request, id):
     # dictionary for initial data with
@@ -292,6 +306,7 @@ def delete(request, id):
 #search box for django
 def search(request):
     location_list = LocationChoiceField()
+    label_list = LabelChoiceField()
     if 'q' in request.GET:
         q = request.GET['q']
         # data = Film.objects.filter(filmurl__icontains=q)
@@ -301,11 +316,15 @@ def search(request):
     elif request.GET.get('locations'):
         selected_location = request.GET.get('locations')
         details = Film.objects.filter(checkstatus=selected_location)
+    elif request.GET.get('label'):
+        labels = request.GET.get('label')
+        details = Film.objects.filter(dropdownlist=labels)
     else:
         details = Film.objects.all().order_by('-id')
     context = {
         'details': details,
         'location_list': location_list,
+        'label_list': label_list
     }
     return render(request, 'search.html', context)
 
@@ -315,15 +334,39 @@ from django.views.generic import View
 
 class Product_view(View):
     
-    def get(self, request):
-        # allproduct=Film.objects.all().order_by('-id')
-        allproduct=Film.objects.all().order_by('-id')
-        context={
-            'details':allproduct
+    # def get(self, request):
+    #     # allproduct=Film.objects.all().order_by('-id')
+    #     allproduct=Film.objects.all().order_by('-id')
+    #     context={
+    #         'details':allproduct
+    #     }
+    #     # queryset = Film.objects.filter(checkstatus__in=str(0))
+    #     # print(queryset)
+    #     return render(request, "retrieve.html", context)
+    def get(self,  request):
+        # location_list = LocationChoiceField()
+        label_list = LabelChoiceField()
+        if 'q' in request.GET:
+            q = request.GET['q']
+            # data = Film.objects.filter(filmurl__icontains=q)
+            multiple_q = Q(Q(year__icontains=q) | Q(filmurl__icontains=q))
+            details = Film.objects.filter(multiple_q)
+            # object=Film.objects.get(id=id)
+        elif request.GET.get('locations'):
+            selected_location = request.GET.get('locations')
+            details = Film.objects.filter(checkstatus=selected_location)
+        elif request.GET.get('label'):
+            labels = request.GET.get('label')
+            details = Film.objects.filter(dropdownlist=labels)
+        else:
+            details = Film.objects.all().order_by('-id')
+        context = {
+            'details': details,
+            # 'location_list': location_list,
+            'label_list': label_list
         }
-        # queryset = Film.objects.filter(checkstatus__in=str(0))
-        # print(queryset)
-        return render(request, "retrieve.html", context)
+        return render(request, 'retrieve.html', context)
+
     def post(self, request, *args, **kwargs):
         # if request.method=="POST":
         #     product_ids=request.POST.getlist('id[]')

@@ -113,14 +113,45 @@
             <input type="button" value="Reset Table" onclick=""/>
           </div> -->
           <div>
-            <form method="get" action="{% url 'search' %}">
-                {{ location_list }}
+            <!-- <form method="get" action="{% url 'search' %}">
+                {{ location_list }} -->
+                
                 <!-- <label for="id_locations">Locations:</label><select name="locations" required="" id="id_locations">
                     <option value="" selected="">---------</option>
                   
                     <option value="1">1</option>
                   
                     <option value="0">0</option> -->
+                <!-- <input type="submit" >
+            </form> -->
+            <form method="get" action="{% url 'search' %}">
+                
+                <!-- {{ label_list }} -->
+                <label>Lead type</label>
+                <select name="label" required="" id="id_label">
+                    <option value="" selected="">---------</option>
+                  
+                    <!-- <option value=""></option> -->
+                  
+                    <option value="Requirements">Requirements</option>
+                  
+                    <option value="Interview questions">Interview questions</option>
+                  
+                    <option value="Benchsales">Benchsales</option>
+                  
+                    <option value="Web content">Web content</option>
+                  
+                    <option value="Blog">Blog</option>
+                  
+                    <option value="Misc">Misc</option>
+                  
+                    <option value="Presentation">Presentation</option>
+                  
+                    <option value="Training">Training</option>
+                  
+                    <option value="3rd party Job posting &amp; Recruitment">3rd party Job posting &amp; Recruitment</option>
+                  
+                  </select>
                 <input type="submit" >
             </form>
           </div>
@@ -134,9 +165,10 @@
                     <tr>
                         <!-- <th width="15%"></th> -->
                         <th width="15%">Date and Time</th>
-                        <th width="15%">Name</th>
+                        <th width="15%">Mobile Number</th>
                         <th width="50%">Message</th>
                         <th>status</th>
+                        <th>Lead type</th>
                         <th width="10%">Edit</th>
                         <th width="10%">Delete</th>
                     </tr>
@@ -145,6 +177,7 @@
                     <!-- {%csrf_token %} -->
                     
                     {% for i in details %}
+                    {% if i.checkstatus == 0 %}
                     
                     <tr>
                     <!-- <tr  id="{{i.id}}"> -->
@@ -153,10 +186,12 @@
                         <td style="padding:10px;">{{i.year}}</td>
                         <td style="padding:10px;">{{i.filmurl}}</td>
                         <td style="padding:10px;">{{i.checkstatus}}</td>
+                        <td style="padding:10px;">{{i.dropdownlist}}</td>
                         <!-- <td style="padding:10px;" class="meg">{{i.genre}}</td> -->
                         <td style="padding:10px;text-align: center;"><a class="editbtn" href="{% url 'edit' i.pk %}">Edit</a></td>
                         <td style="padding:10px;text-align: center;"><a class="deletebtn" href="{% url 'delete' i.pk %}">Delete</a></td>
                     </tr>
+                    {% endif %}
                     {% endfor %}
                 </tbody>
             </tbody>

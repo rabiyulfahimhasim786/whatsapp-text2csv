@@ -77,45 +77,7 @@
             <button type="submit" id="delete_btn" class="btn_delete">Delete</button>
         </div>
         <div>
-            <button type="submit" id="snippet_btn" class="btn_snippet">convert to lead</button>
-        </div>
-        <div>
-            <form class="form-inline my-2 my-lg-0" >
-                <input class="form-control mr-sm-2" name="q" type="search" placeholder="Search" aria-label="Search">
-                <button class="btn btn-outline-success my-2 my-sm-0" type="submit">Search</button>
-              </form>
-        </div>
-        <div>
-            <form method="get" action="{% url 'retrieve' %}">
-                
-                <!-- {{ label_list }} -->
-                <label>Lead type</label>
-                <select name="label" required="" id="id_label">
-                    <option value="" selected="">---------</option>
-                  
-                    <!-- <option value=""></option> -->
-                  
-                    <option value="Requirements">Requirements</option>
-                  
-                    <option value="Interview questions">Interview questions</option>
-                  
-                    <option value="Benchsales">Benchsales</option>
-                  
-                    <option value="Web content">Web content</option>
-                  
-                    <option value="Blog">Blog</option>
-                  
-                    <option value="Misc">Misc</option>
-                  
-                    <option value="Presentation">Presentation</option>
-                  
-                    <option value="Training">Training</option>
-                  
-                    <option value="3rd party Job posting &amp; Recruitment">3rd party Job posting &amp; Recruitment</option>
-                  
-                  </select>
-                <input type="submit" >
-            </form>
+            <button type="submit" id="snippet_btn" class="btn_snippet">Status</button>
         </div>
         <table class="retrieve_table" border="5px solid #000;">
             <tbody>
@@ -125,7 +87,7 @@
                         <th width="15%">Date and Time</th>
                         <th width="15%">Mobile Number</th>
                         <th width="50%">Message</th>
-                        <th>Lead type</th>
+                        <th>Lead Type</th>
                         <!-- <th>Message</th> -->
                         <th width="10%">Edit</th>
                         <th width="10%">Delete</th>
@@ -157,76 +119,6 @@
     </div>
     <script src="https://code.jquery.com/jquery-2.2.4.min.js"></script>
     <script>
-    $(document).ready(function(){
-        $('#delete_btn').click(function(){
-            var id =[];
-            $(':checkbox:checked').each(function(i){
-                id[i]=$(this).val()
-            })
-            if(id.length === 0){
-                alert("Please select item(s) to delete.")
-            }else{
-                if(confirm("Are you sure you want to delete this item(s)?")){
-                    var csrf=$('input[name=csrfmiddlewaretoken]').val();
-                    console.log(id)
-                    $.ajax({
-                        url:'.',
-                        method:"POST",
-                        data:{
-                            id,
-                            csrfmiddlewaretoken:csrf
-                        },
-                        success:function(response){
-                            for(var i=0; i < id.length; i++){
-                                $('tr#'+id[i]+'').css('background-color', '#ccc');
-                                $('tr#'+id[i]+'').fadeOut('slow');
-                                window.location.href = '/retrieve'
-                            }                               
-                        }
-                    })
-                }
-            }                  
-        })
-    })
-</script>
-
-    ###
-    ###snippet button - convert to lead
-
-<script>
-    $(document).ready(function(){
-        $('#snippet_btn').click(function(){
-            var ids =[];
-            $(':checkbox:checked').each(function(i){
-                ids[i]=$(this).val()
-            })
-            if(ids.length === 0){
-                alert("Please select item(s) to delete.")
-            }else{
-                if(confirm("Are you sure you want to delete this item(s)?")){
-                    var csrf=$('input[name=csrfmiddlewaretoken]').val();
-                    console.log(ids)
-                    $.ajax({
-                        url:'.',
-                        method:"POST",
-                        data:{
-                            ids,
-                            csrfmiddlewaretoken:csrf
-                        },
-                        success:function(response){
-                            for(var i=0; i < ids.length; i++){
-                                $('tr#'+ids[i]+'').css('background-color', '#ccc');
-                                $('tr#'+ids[i]+'').fadeOut('slow');
-                                window.location.href = '/retrieve'
-                            }                               
-                        }
-                    })
-                }
-            }                  
-        })
-    })
-</script>
-    <!-- <script>
         $(document).ready(function(){
             $('#delete_btn').click(function(){
                 if(confirm("Are you sure you want to delete this items ?")){
@@ -258,8 +150,8 @@
                 }
             })
         })
-    </script> -->
-    <!-- <script>
+    </script>
+    <script>
         $(document).ready(function(){
             $('#snippet_btn').click(function(){
                 if(confirm("Are you sure you want to change this status ?")){
@@ -291,7 +183,7 @@
                 }
             })
         })
-    </script> -->
+    </script>
 
 </body>
 

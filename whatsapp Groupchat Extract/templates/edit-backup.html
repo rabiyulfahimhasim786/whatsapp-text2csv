@@ -41,14 +41,6 @@
     border-radius: 10px;
     color: #fff;
     width: 99.6%;
-    cursor: pointer;
-}
-/* .subbtn:hover {
-  background: #025822;
-} */
-.add_btn_class {
-  content: "plz wait";
-  background: #025822;
 }
 .back {
     background: #0b9b3f;
@@ -187,31 +179,6 @@ input:checked + .slider:before {
 .ontwbt {
   margin: 10px 0px;
 }
-/* .chat_area {
-  height: 140px !important;
-} */
-.statu_s {
-  display: none !important;
-}
-.back {
-    background: #0b9b3f;
-    border: none;
-    padding: 10px 20px;
-    border-radius: 10px;
-    color: #fff;
-    /* width: 99.6%; */
-    text-decoration: none;
-}
-.optio_n {
-  /* background: #0b9b3f; */
-  border: 1px solid #0b9b3f;
-  height: 30px;
-  border-radius: 8px;
-  margin-bottom: 18px;
-}
-.stat ul li {
-  list-style-type: none;
-}
 </style>
 </head>
 
@@ -221,58 +188,26 @@ input:checked + .slider:before {
             <div class="bord_box">
                 <div class="back_btnn">
                     <a class="back" href="{% url 'retrieve' %}">Back</a>
-                    <!-- <a class="back" href="{% url 'search' %}">Search</a> -->
                 </div>
             <form action="/update/{{object.id}}" method="POST">
                 {% csrf_token %}
                 <ul class="form-style-1">
                     <li>
                         <label>Date and Time</label>
-                        <!-- <textarea class="field-long field-textarea" name='title'>{{object.title}}</textarea> -->
-                        <input type="text" class="field-long field-textarea" name="title" value="{{object.title}}">
+                        <textarea class="field-long field-textarea" name='title'>{{object.title}}</textarea>
                     </li>
                     <li>
-                        <label>Mobile Number</label>
-                        <!-- <textarea class="field-long field-textarea" name="year">{{object.year}}</textarea> -->
-                        <input type="text" class="field-long field-textarea" name="year" value="{{object.year}}">
+                        <label>Person</label>
+                        <textarea class="field-long field-textarea" name="year">{{object.year}}</textarea>
                     </li>
                     <li>
-                        <label>Message</label>
-                        <textarea class="field-long field-textarea chat_area" style="height: 150px;" name="filmurl">{{object.filmurl}}</textarea>
+                        <label>Chat</label>
+                        <textarea class="field-long field-textarea" name="filmurl">{{object.filmurl}}</textarea>
                     </li>
-                    <li class="statu_s">
+                    <li>
                       <label>Status</label>
-                      <!-- <textarea class="field-long field-textarea" name="checkstatus">{{object.checkstatus}}</textarea> -->
-                      <input type="text" class="field-long field-textarea" name="checkstatus" value="{{object.checkstatus}}">
+                      <textarea class="field-long field-textarea" name="checkstatus">{{object.checkstatus}}</textarea>
                   </li>
-                  <li>
-                    <label></label>
-                    <!-- <textarea class="field-long field-textarea" name="checkstatus">{{object.checkstatus}}</textarea> -->
-                    <!-- <input type="text" class="field-long field-textarea" name="dropdownlist" value="{{object.dropdownlist}}"> -->
-                    <label for="id_locations">Lead Type</label>
-                    <select  name="dropdownlist" id="dropdownlist" class="optio_n" required="" onchange="add_class_onchange()">
-                    <option  value="" selected="">---------</option>
-              
-                    <option value="Benchsales">Benchsales</option>
-                  
-                    <option value="Requirements">Requirements</option>
-
-                    <option value="3rd party Job posting & Recruitment">3rd party Job posting & Recruitment</option>
-                    <option value="Web content">Web content</option>
-                    <option value="Blog">Blog</option>
-                    <option value="Training">Training</option>
-                    <option value="Presentation">Presentation</option>
-                    <option value="Interview questions">Interview questions</option>
-                    <option value="Misc">Misc</option>
-                      <button class="subbtn">Submit</button>
-                  
-                    </select>
-                </li>
-                <li>
-                  <button id="add_class" class="subbtn">Submit</button>
-                  <!-- <a href="#">Test</a> -->
-                </li>
-                  
                   <!-- <li>
                     <label>Status</label>
                     
@@ -292,7 +227,7 @@ input:checked + .slider:before {
                         <textarea class="field-long field-textarea" name='genre'>{{object.genre}}</textarea>
                     </li> -->
                     <li>
-                    
+                        
                           <!-- <label>Currently working here?{{object.checkstatus}}</label>
                           <label class="switch">
                             <input class="field-long field-textarea" type="checkbox" name='checkstatus'>
@@ -321,11 +256,12 @@ input:checked + .slider:before {
                           
                             
                     </li>
-                    
+                    <li>
+                        <button class="subbtn">Submit</button>
+                    </li>
                     
                 </ul>
             </form>
-            <div class="stat">
             <ul>
               <li>
                 <div style="display:inline-block">
@@ -334,7 +270,6 @@ input:checked + .slider:before {
                   <a class="onetwobtn" href="{% url 'status' object.id %}">Status {{object.checkstatus}} </a></div></div>
               </li>
             </ul>
-          </div>
             <!-- <script src="https://code.jquery.com/jquery-3.3.1.js"></script> -->
 <!-- <script type="text/javascript">
 $(document).ready(function() {
@@ -347,30 +282,6 @@ $(document).ready(function() {
     });
 }); 
 </script> -->
-<script>
-
-  function add_class_onchange(){
-        var status = this.value;
-        // alert(status);
-        if(status != "")
-        var element = document.getElementById("add_class");
-        element.classList.add("add_btn_class");
-      
-  }
-
-
-// $(function(){
-
-// $("#status").change(function(){
-//     var status = this.value;
-//     alert(status);
-//     if(status != "")
-//     var element = document.getElementById("add_class");
-//         element.classList.add("Your class name");
-//     });
-
-// });
-</script>
         </div>
        </div>
     </div>
