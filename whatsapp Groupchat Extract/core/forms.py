@@ -22,3 +22,11 @@ class LocationChoiceField(forms.Form):
         queryset=Film.objects.values_list("checkstatus", flat=True).distinct(),
         #empty_label=None
     )
+
+
+class LabelChoiceField(forms.Form):
+
+    label = forms.ModelChoiceField(
+        queryset=Film.objects.values_list("dropdownlist", flat=True).distinct(),
+        #empty_label=None
+    )
