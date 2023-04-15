@@ -44,8 +44,8 @@ def getDatapoint(line):
     else:
         author= None
     return date, time, author, message
-dot='./media/'
-# dot = '/var/www/subdomain/whatsappdata/analysis/media/'
+# dot='./media/'
+dot = '/var/www/subdomain/whatsappdata/analysis/media/'
 def index(requests):
     documents = whatsapp.objects.all()
     for obj in documents:
@@ -279,9 +279,9 @@ def update(request,id):
         if form.is_valid():
             form.save()
             # object=Film.objects.all()
-            # return redirect('retrieve')
+            return redirect('home')
             # return HttpResponseRedirect(request.META.get('HTTP_REFERER'))
-            return redirect(request.META['HTTP_REFERER'])
+            # return redirect(request.META['HTTP_REFERER'])
     # return redirect('retrieve')
     # return HttpResponseRedirect(request.META.get('HTTP_REFERER'))
     return redirect(request.META['HTTP_REFERER'])
@@ -301,7 +301,7 @@ def delete(request, id):
         # after deleting redirect to
         # home page
         # return HttpResponseRedirect("/")
-        return redirect('retrieve')
+        return redirect('home')
  
     return render(request, "delete.html", context)
 
@@ -403,7 +403,7 @@ class Product_view(View):
                     # product = Film.object.get(pk=id)
                     obj = get_object_or_404(Film, id = id)
                     obj.delete()
-                return redirect('retrieve')
+                return redirect('home')
             elif 'ids[]' in request.POST:
                 # snippet_ids=request.POST.getlist('ids[]')
                 print(snippet_ids)
@@ -416,7 +416,7 @@ class Product_view(View):
                     print(status)
                     status.checkstatus^= 1
                     status.save()
-                return redirect('retrieve')
+                return redirect('home')
             elif 'id' in request.POST:
                 # snippet_ids=request.POST.getlist('ids[]')
                 print(delete_idd)
@@ -429,9 +429,9 @@ class Product_view(View):
                 obj = get_object_or_404(Film, id=id)
                 obj.delete()
                 
-                return redirect('retrieve')
+                return redirect('home')
             else:
-                return redirect('retrieve')
+                return redirect('home')
 
                 
 

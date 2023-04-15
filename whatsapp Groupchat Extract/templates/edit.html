@@ -223,7 +223,7 @@ visibility: hidden;
 
             <div class="bord_box">
                 <div class="back_btnn">
-                    <a class="back" href="{% url 'retrieve' %}">Back</a>
+                    <a class="back" href="{% url 'home' %}">Back</a>
                     <!-- <a class="back" href="{% url 'search' %}">Search</a> -->
                 </div>
             <form action="/update/{{object.id}}" method="POST">
@@ -254,7 +254,7 @@ visibility: hidden;
                     <!-- <input type="text" class="field-long field-textarea" name="dropdownlist" value="{{object.dropdownlist}}"> -->
                     <label for="id_locations">Lead Type</label>
                     <select  name="dropdownlist" id="dropdownlist" class="optio_n" required="" onchange="add_class_onchange()">
-                    <option  value="" selected="">---------</option>
+                    <option  value="{{object.dropdownlist}}" selected="">{{object.dropdownlist}}</option>
               
                     <option value="Benchsales">Benchsales</option>
                   
