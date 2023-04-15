@@ -178,18 +178,25 @@
                     <option value="" selected="">Please select a value</option>
                   
                     <!-- <option value=""></option> -->
-                    <option value="New">New</option>
-                    <option value="Benchsales">Benchsales</option>
                   
                     <option value="Requirements">Requirements</option>
-
-                    <option value="3rd party Job posting & Recruitment">3rd party Job posting & Recruitment</option>
-                    <option value="Web content">Web content</option>
-                    <option value="Blog">Blog</option>
-                    <option value="Training">Training</option>
-                    <option value="Presentation">Presentation</option>
+                  
                     <option value="Interview questions">Interview questions</option>
+                  
+                    <option value="Benchsales">Benchsales</option>
+                  
+                    <option value="Web content">Web content</option>
+                  
+                    <option value="Blog">Blog</option>
+                  
                     <option value="Misc">Misc</option>
+                  
+                    <option value="Presentation">Presentation</option>
+                  
+                    <option value="Training">Training</option>
+                  
+                    <option value="3rd party Job posting &amp; Recruitment">3rd party Job posting &amp; Recruitment</option>
+                  
                   </select>
                 <input class="submi_t_btn" type="submit" >
             </form>
@@ -213,7 +220,6 @@
                     {%csrf_token %}
                     {% for i in details %}
                    
-                    
                     {% if i.checkstatus == 1 %}
                     <tr id="{{i.id}}">
                         <td class="check_box"><input type="checkbox" name="product_id[]" value="{{i.id}}" id="retrieve"></td>
@@ -227,7 +233,6 @@
                         <td style="padding:10px;"><button class="delete-btn" data-id="{{ i.id }}">Delete</button></td>
                     </tr>
                     {% endif %}
-                    
                     {% endfor %}
                 </tbody>
             </tbody>

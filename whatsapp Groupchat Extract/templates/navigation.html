@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>End of Navigation</title>
+    <style>
+      /* Add CSS styles for the message here */
+      body {
+        font-family: Arial, sans-serif;
+      }
+      h1 {
+        color: red;
+      }
+    </style>
+  </head>
+  <body>
+    <h1>End of Navigation Reached</h1>
+    <p>There are no more objects to navigate to.</p>
+    <div class="back_btnn">
+      <p>you would like to vist these below pages</p>
+      <a class="back" href="{% url 'home' %}">Home</a>
+      <a class="back" href="{% url 'leads' %}">Leads</a>
+      <!-- <a class="back" href="{% url 'search' %}">Search</a> -->
+  </div>
+  </body>
+</html>

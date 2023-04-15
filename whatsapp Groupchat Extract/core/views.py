@@ -1,5 +1,6 @@
 from django.shortcuts import render, redirect
 from django.http import HttpResponse
+from django.urls import reverse
 import regex
 import pandas as pd
 import numpy as np
@@ -267,23 +268,144 @@ def indexhtml(request):
 
 def edit(request,id):
     object=Film.objects.get(id=id)
-    # sources = (0, 1)
+
+   
     return render(request,'edit.html',{'object':object,}) #'sources': sources})
 from django.http import HttpResponseRedirect
 
 def update(request,id):
-    object=Film.objects.get(id=id)
-    print(object)
-    form=FilmForm(request.POST,instance=object)
+    my_model = get_object_or_404(Film, id=id)
     if request.method == 'POST':
+        form = FilmForm(request.POST, instance=my_model)
         if form.is_valid():
             form.save()
-            # object=Film.objects.all()
-            return redirect('home')
+            if 'save_home' in request.POST:
+                return redirect('home')
+            elif 'save_next' in request.POST:
+                try:
+                    next_model = Film.objects.filter(id__gt=id).filter(dropdownlist='New').order_by('id')[0]
+                    return redirect('edit', id=next_model.id)
+                except IndexError:
+                    return render(request, 'navigation.html')
+            elif 'save_continue' in request.POST:
+                return HttpResponseRedirect(request.META.get('HTTP_REFERER'))
+            elif 'delete_d' in request.POST:
+                # snippet_ids=request.POST.getlist('ids[]')
+                print(id)
+                # for id in delete_idd:
+                    # product = Film.object.get(pk=id)
+                    # obj = get_object_or_404(Film, id = id)
+                    # obj.delete()
+                # id = request.POST.get('idd')
+                # id = id
+                # obj = get_object_or_404(Film, id=id)
+                # obj.delete()
+                try:
+
+                    next_model = Film.objects.filter(id__gt=id).filter(dropdownlist='New').filter(checkstatus=1).order_by('id')[0]
+                    obj = get_object_or_404(Film, id=id)
+                    id=next_model.id
+                    
+                    # obj = get_object_or_404(Film, id=id)
+                    obj.delete()
+                    return redirect('edit', id)
+                except IndexError:
+                    return render(request, 'navigation.html')
+    else:
+        form = FilmForm(instance=my_model)
+    
+    # my_model = Film.objects.get(id=id)
+    # if request.method == 'POST':
+    #     form = FilmForm(request.POST, instance=my_model)
+    #     if form.is_valid():
+    #         form.save()
+    #         if 'save_home' in request.POST:
+    #             return redirect('home')
+    #         elif 'save_next' in request.POST:
+    #             try:
+    #                 next_model = Film.objects.filter(id__gt=id).order_by('id')[0]
+    #                 return redirect('edit',id=next_model.id)
+    #             except Film.DoesNotExist:
+    #                 pass
+    # else:
+    #     form = FilmForm(instance=my_model)
+
+    # object=Film.objects.get(id=id)
+    # print(object)
+    # form=FilmForm(request.POST,instance=object)
+    # if request.method == 'POST':
+    #     if form.is_valid():
+    #         form.save()
+    #         # object=Film.objects.all()
+    #         return redirect('home')
+
             # return HttpResponseRedirect(request.META.get('HTTP_REFERER'))
             # return redirect(request.META['HTTP_REFERER'])
     # return redirect('retrieve')
     # return HttpResponseRedirect(request.META.get('HTTP_REFERER'))
+    return redirect(request.META['HTTP_REFERER'])
+
+def leadedit(request,id):
+    object=Film.objects.get(id=id)
+
+   
+    return render(request,'leadsedit.html',{'object':object,})
+
+def leadupdate(request,id):
+    my_model = get_object_or_404(Film, id=id)
+    if request.method == 'POST':
+        form = FilmForm(request.POST, instance=my_model)
+        if form.is_valid():
+            form.save()
+            # delete_idd=request.POST.get('id')
+            if 'save_home' in request.POST:
+                return redirect('leads')
+            elif 'save_next' in request.POST:
+                try:
+                    next_model = Film.objects.filter(id__gt=id).exclude(dropdownlist='New').order_by('id')[0]
+                    return redirect('leadedit', id=next_model.id)
+                except IndexError:
+                    return render(request, 'navigation.html')
+            elif 'save_continue' in request.POST:
+                return HttpResponseRedirect(request.META.get('HTTP_REFERER'))
+            elif 'save_convert' in request.POST:
+                status = Film.objects.get(id=id)
+                print(status)
+                status.checkstatus^= 1
+                status.save()
+                try:
+                    next_model = Film.objects.filter(id__gt=id).exclude(dropdownlist='New').filter(checkstatus=1).order_by('id')[0]
+                    return redirect('leadedit', id=next_model.id)
+                except IndexError:
+                    return render(request, 'navigation.html')
+                
+            elif 'delete_d' in request.POST:
+                # snippet_ids=request.POST.getlist('ids[]')
+                print(id)
+                # for id in delete_idd:
+                    # product = Film.object.get(pk=id)
+                    # obj = get_object_or_404(Film, id = id)
+                    # obj.delete()
+                # id = request.POST.get('idd')
+                # id = id
+                # obj = get_object_or_404(Film, id=id)
+                # obj.delete()
+                try:
+
+                    next_model = Film.objects.filter(id__gt=id).exclude(dropdownlist='New').filter(checkstatus=1).order_by('id')[0]
+                    obj = get_object_or_404(Film, id=id)
+                    id=next_model.id
+                    
+                    # obj = get_object_or_404(Film, id=id)
+                    obj.delete()
+                    return redirect('leadedit', id)
+                except IndexError:
+                    return render(request, 'navigation.html')
+                
+                # return redirect('leads')
+                # return HttpResponseRedirect(request.META.get('HTTP_REFERER'))                
+    else:
+        form = FilmForm(instance=my_model)
     return redirect(request.META['HTTP_REFERER'])
 
 def delete(request, id):
@@ -323,7 +445,7 @@ def search(request):
         q = request.GET['q']
         # data = Film.objects.filter(filmurl__icontains=q)
         multiple_q = Q(Q(year__icontains=q) | Q(filmurl__icontains=q))
-        details = Film.objects.filter(multiple_q)
+        details = Film.objects.filter(multiple_q).filter(Q(checkstatus=0))
         # object=Film.objects.get(id=id)
     elif request.GET.get('locations'):
         selected_location = request.GET.get('locations')
@@ -362,16 +484,17 @@ class Product_view(View):
             q = request.GET['q']
             # data = Film.objects.filter(filmurl__icontains=q)
             multiple_q = Q(Q(year__icontains=q) | Q(filmurl__icontains=q))
-            details = Film.objects.filter(multiple_q)
+            details = Film.objects.filter(multiple_q).filter(Q(dropdownlist='New'))
             # object=Film.objects.get(id=id)
         elif request.GET.get('locations'):
             selected_location = request.GET.get('locations')
             details = Film.objects.filter(checkstatus=selected_location)
         elif request.GET.get('label'):
             labels = request.GET.get('label')
-            details = Film.objects.filter(dropdownlist=labels)
+            details = Film.objects.filter(dropdownlist=labels)#.filter(dropdownlist='New')
         else:
-            details = Film.objects.all().order_by('-id')
+            # details = Film.objects.all().order_by('-id')
+            details = Film.objects.filter(dropdownlist='New').order_by('-id')
         context = {
             'details': details,
             # 'location_list': location_list,
@@ -432,6 +555,98 @@ class Product_view(View):
                 return redirect('home')
             else:
                 return redirect('home')
+
+                
+
+class Leads_view(View):
+    
+    # def get(self, request):
+    #     # allproduct=Film.objects.all().order_by('-id')
+    #     allproduct=Film.objects.all().order_by('-id')
+    #     context={
+    #         'details':allproduct
+    #     }
+    #     # queryset = Film.objects.filter(checkstatus__in=str(0))
+    #     # print(queryset)
+    #     return render(request, "retrieve.html", context)
+    def get(self,  request):
+        # location_list = LocationChoiceField()
+        label_list = LabelChoiceField()
+        if 'q' in request.GET:
+            q = request.GET['q']
+            # data = Film.objects.filter(filmurl__icontains=q)
+            multiple_q = Q(Q(year__icontains=q) | Q(filmurl__icontains=q))
+            details = Film.objects.filter(multiple_q).filter(~Q(dropdownlist='New'))
+            # object=Film.objects.get(id=id)
+        elif request.GET.get('locations'):
+            selected_location = request.GET.get('locations')
+            details = Film.objects.filter(checkstatus=selected_location)
+        elif request.GET.get('label'):
+            labels = request.GET.get('label')
+            details = Film.objects.filter(dropdownlist=labels)
+        else:
+            # details = Film.objects.all().order_by('-id')
+            details = Film.objects.exclude(dropdownlist='New').order_by('-id')
+        context = {
+            'details': details,
+            # 'location_list': location_list,
+            'label_list': label_list
+        }
+        return render(request, 'leadtype.html', context)
+
+    def post(self, request, *args, **kwargs):
+        # if request.method=="POST":
+        #     product_ids=request.POST.getlist('id[]')
+        #     # if product_ids == product_ids:
+        #     product_ids=request.POST.getlist('id[]')
+        #     print(product_ids)
+        #     for id in product_ids:
+        #         # product = Film.object.get(pk=id)
+        #         obj = get_object_or_404(Film, id = id)
+        #         obj.delete()
+        #     return redirect('retrieve')
+         if request.method=="POST":
+            product_ids=request.POST.getlist('id[]')
+            # if product_ids == product_ids:
+            snippet_ids=request.POST.getlist('ids[]')
+            delete_idd=request.POST.get('id')
+            print(product_ids)
+            print(snippet_ids)
+            if 'id[]' in request.POST:
+                print(product_ids)
+                for id in product_ids:
+                    # product = Film.object.get(pk=id)
+                    obj = get_object_or_404(Film, id = id)
+                    obj.delete()
+                return redirect('home')
+            elif 'ids[]' in request.POST:
+                # snippet_ids=request.POST.getlist('ids[]')
+                print(snippet_ids)
+                for id in snippet_ids:
+                    # product = Film.object.get(pk=id)
+                    # obj = get_object_or_404(Film, id = id)
+                    # obj.delete()
+                    print(id)
+                    status = Film.objects.get(id=id)
+                    print(status)
+                    status.checkstatus^= 1
+                    status.save()
+                return redirect('leads')
+            elif 'id' in request.POST:
+                # snippet_ids=request.POST.getlist('ids[]')
+                print(delete_idd)
+                # for id in delete_idd:
+                    # product = Film.object.get(pk=id)
+                    # obj = get_object_or_404(Film, id = id)
+                    # obj.delete()
+                # id = request.POST.get('idd')
+                id = delete_idd
+                obj = get_object_or_404(Film, id=id)
+                obj.delete()
+                
+                return redirect('leads')
+            else:
+                return redirect('leads')
 
                 
 

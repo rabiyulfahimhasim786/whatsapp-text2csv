@@ -216,7 +216,7 @@ input:checked + .slider:before {
 visibility: hidden;
 }
 button[name="save_home"],
-button[name="save_next"],
+button[name="save_convert"],
 button[name="save_continue"]{
   background-color: #4CAF50; /* Green */
   border: none;
@@ -232,18 +232,18 @@ button[name="save_continue"]{
 }
 
 button[name="save_home"]:hover,
-button[name="save_next"]:hover,
-button[name="save_continues"]:hover {
+button[name="save_convert"]:hover,
+button[name="save_continue"]:hover {
   background-color: #3e8e41; /* Darker green on hover */
 }
 
+/* button[name="save_home"] {
+  background-color: #f44336; /* Red */
+ */
 
-
-/* button[name="delete_d"] {
-  background-color: #f44336;  */
-
-
- 
+/* button[name="save_home"]:hover {
+  background-color: #a32b1a; /* Darker red on hover */
+ */
 
 </style>
 </head>
@@ -253,10 +253,10 @@ button[name="save_continues"]:hover {
 
             <div class="bord_box">
                 <div class="back_btnn">
-                    <a class="back" href="{% url 'home' %}">Back</a>
+                    <a class="back" href="{% url 'leads' %}">Back</a>
                     <!-- <a class="back" href="{% url 'search' %}">Search</a> -->
                 </div>
-            <form action="/update/{{object.id}}" method="POST">
+            <form action="/leadupdate/{{object.id}}" method="POST">
                 {% csrf_token %}
                 <ul class="form-style-1">
                     <li>
@@ -305,10 +305,11 @@ button[name="save_continues"]:hover {
                 </li>
                 <li>
                   <!-- <button id="add_class" class="subbtn">Submit & Next</button> -->
+                  <!-- <button type="submit" name="save_continue">Save & Continue</button> -->
                   <!-- <button type="submit" name="delete_d">Delete</button> -->
-                  <button type="submit" name="save_continue">Update & Continue</button>
                   <button type="submit" name="save_home">Update</button>
-                  <button type="submit" name="save_next">Update & Next</button>
+                  <button type="submit" name="save_convert">Update & Convert to Lead</button>
+                  <!-- <button type="submit" name="save_next">Save & Next</button> -->
                   <!-- <p>{{errormessage}}</p> -->
                   <!-- <a href="#">Test</a> -->
                 </li>
@@ -367,6 +368,7 @@ $(document).ready(function() {
 
 // });
 </script>
+
         </div>
        </div>
     </div>
