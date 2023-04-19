@@ -37,9 +37,7 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
-    'core.apps.CoreConfig',
-    'chatgpt.apps.ChatgptConfig',
-    'rest_framework',
+    'core',
 ]
 
 MIDDLEWARE = [
@@ -83,24 +81,6 @@ DATABASES = {
     }
 }
 
-# data bases 2
-# DATABASES = {
-#     'default': {
-#         'ENGINE': 'django.db.backends.mysql',
-#         'NAME': 'whatsappdatabase',
-#         'USER':'phpmyadmin',
-#         'PASSWORD':'Dess@Houston77042',
-#         # 'USER': 'root',  
-#         # 'PASSWORD': '',  
-#         'HOST':'localhost',
-#         'PORT':'3306',
-#         'OPTIONS': {
-#    'init_command': 'SET default_storage_engine=INNODB',
-#     'sql_mode': 'traditional',
-#     'charset': 'utf8mb4',
-# }
-#     }
-# }
 
 # Password validation
 # https://docs.djangoproject.com/en/3.2/ref/settings/#auth-password-validators

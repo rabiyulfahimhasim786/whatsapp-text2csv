@@ -28,7 +28,12 @@
     border: 1px solid #e5e7eb;
     background: #fff;
 }
-
+/* .edittable tr td textarea{
+    width: 100%;
+    height: 40px;
+    border-radius: 8px;
+    border: 1px solid #591fc9;
+} */
 .subbtn {
     background: #0b9b3f;
     border: none;
@@ -182,7 +187,9 @@ input:checked + .slider:before {
 .ontwbt {
   margin: 10px 0px;
 }
-
+/* .chat_area {
+  height: 140px !important;
+} */
 .statu_s {
   display: none !important;
 }
@@ -209,7 +216,7 @@ input:checked + .slider:before {
 visibility: hidden;
 }
 button[name="save_home"],
-button[name="save_next"],
+button[name="save_convert"],
 button[name="save_continue"]{
   background-color: #4CAF50; /* Green */
   border: none;
@@ -225,11 +232,10 @@ button[name="save_continue"]{
 }
 
 button[name="save_home"]:hover,
-button[name="save_next"]:hover,
-button[name="save_continues"]:hover {
+button[name="save_convert"]:hover,
+button[name="save_continue"]:hover {
   background-color: #3e8e41; /* Darker green on hover */
 }
-
 .delete-btn {
         padding: 4px 15px;
         background: #dc2626;
@@ -280,23 +286,13 @@ button[name="save_continues"]:hover {
     cursor: pointer;
     border-radius: 5px;
 }
-/* button[name="delete_d"] {
-  background-color: #f44336;  */
-.conform_pop {
-  background-color: #fff;
-    border: 1px solid #eee;
-    border-radius: 8px;
-    width: fit-content;
-    padding: 10px;
-    position: absolute;
-    top: 90px;
-    left: 50%;
-    transform: translate(-50% , -50%);
-}
-.conform_pop h3 {
-  padding: 0px;
-  margin: 0px;
-}
+/* button[name="save_home"] {
+  background-color: #f44336; /* Red */
+ */
+
+/* button[name="save_home"]:hover {
+  background-color: #a32b1a; /* Darker red on hover */
+ */
 
 </style>
 </head>
@@ -306,11 +302,10 @@ button[name="save_continues"]:hover {
 
             <div class="bord_box">
                 <div class="back_btnn">
-                    <a class="back" href="{% url 'home' %}">Back</a>
+                    <a class="back" href="{% url 'leads' %}">Back</a>
                     <!-- <a class="back" href="{% url 'search' %}">Search</a> -->
                 </div>
-       
-            <form action="/update/{{object.id}}" method="POST">
+            <form action="/leadupdate/{{object.id}}" method="POST">
                 {% csrf_token %}
                 <ul class="form-style-1">
                     <li>
@@ -335,6 +330,8 @@ button[name="save_continues"]:hover {
                   
                   <li>
                     <label></label>
+                    <!-- <textarea class="field-long field-textarea" name="checkstatus">{{object.checkstatus}}</textarea> -->
+                    <!-- <input type="text" class="field-long field-textarea" name="dropdownlist" value="{{object.dropdownlist}}"> -->
                     <label for="id_locations">Lead Type</label>
                     <select  name="dropdownlist" id="dropdownlist" class="optio_n" required="" onchange="add_class_onchange()">
                     <option  value="{{object.dropdownlist}}" selected="">{{object.dropdownlist}}</option>
@@ -355,21 +352,26 @@ button[name="save_continues"]:hover {
                   
                     </select>
                 </li>
-                <li>                  
-                  <button type="submit" name="save_continue">Update & Continue</button>
+                <li>
+                  <!-- <button id="add_class" class="subbtn">Submit & Next</button> -->
+                  <!-- <button type="submit" name="save_continue">Save & Continue</button> -->
+                  <!-- <button type="submit" name="delete_d">Delete</button> -->
                   <button type="submit" name="save_home">Update</button>
-                  <button type="submit" name="save_next">Update & Next</button>
+                  <button type="submit" name="save_convert">Update & Convert to Lead</button>
                   <form id="myForm" action="" method="post">
                     <!-- Your form elements here -->
                     <a href="#" class="delet_e_btn" onclick="showConfirmDialog()">Delete</a>
                     <button type="submit" name="delete_dynamic" class="del_btn" id="delete-btn" style="display:none;">Ok</button>
                   </form>
-                                  </li>
+                  <!-- <button type="submit" name="save_next">Save & Next</button> -->
+                  <!-- <p>{{errormessage}}</p> -->
+                  <!-- <a href="#">Test</a> -->
+                </li>
 
                   
                  
                             
-                  </li>
+                    </li>
                     
                     
                 </ul>
@@ -384,8 +386,19 @@ button[name="save_continues"]:hover {
               </li>
             </ul>
           </div>
-          
-
+            <!-- <script src="https://code.jquery.com/jquery-3.3.1.js"></script> -->
+<!-- <script type="text/javascript">
+$(document).ready(function() {
+    $('#checkbox').change(function() {
+        $.post("/status/", {
+            id: '{{object.id}}', 
+            isworking: this.checked, 
+            csrfmiddlewaretoken: '{{ csrf_token }}' 
+        });
+    });
+}); 
+</script> -->
+<script>
 
   function add_class_onchange(){
         var status = this.value;
@@ -396,22 +409,7 @@ button[name="save_continues"]:hover {
       
   }
 
-   //show the confirmation div
-   function resetDatabase() {
-          document.getElementById("confirm").hidden=false
-        }
-        
-        
-        function confirmYes() {
-              location.href = '/resetDatabase.php';
-        }
-        
-        
-        function confirmNo() {
-          document.getElementById("confirm").hidden=true
-        } -->
 
-<!-- 
 // $(function(){
 
 // $("#status").change(function(){
@@ -422,11 +420,8 @@ button[name="save_continues"]:hover {
 //         element.classList.add("Your class name");
 //     });
 
-// }); -->
-
-<!--  
-</script> -->
-
+// });
+</script>
 <script>
   function showConfirmDialog() {
     if (confirm("Are you sure you want to delete?")) {
@@ -434,15 +429,6 @@ button[name="save_continues"]:hover {
     }
   }
 </script>
-
-<!-- <script>
-  document.getElementById("delete-btn").addEventListener("click", function(event) {
-      event.preventDefault();
-      if (confirm("Are you sure you want to delete this item?")) {
-          document.getElementById("delete-btn").submit();
-      }
-  });
-  </script> -->
         </div>
        </div>
     </div>

@@ -37,9 +37,7 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
-    'core.apps.CoreConfig',
-    'chatgpt.apps.ChatgptConfig',
-    'rest_framework',
+    'core',
 ]
 
 MIDDLEWARE = [
@@ -76,31 +74,25 @@ WSGI_APPLICATION = 'mysite.wsgi.application'
 # Database
 # https://docs.djangoproject.com/en/3.2/ref/settings/#databases
 
-DATABASES = {
-    'default': {
-        'ENGINE': 'django.db.backends.sqlite3',
-        'NAME': BASE_DIR / 'db.sqlite3',
-    }
-}
-
-# data bases 2
+#old database
 # DATABASES = {
 #     'default': {
-#         'ENGINE': 'django.db.backends.mysql',
-#         'NAME': 'whatsappdatabase',
-#         'USER':'phpmyadmin',
-#         'PASSWORD':'Dess@Houston77042',
-#         # 'USER': 'root',  
-#         # 'PASSWORD': '',  
-#         'HOST':'localhost',
-#         'PORT':'3306',
-#         'OPTIONS': {
-#    'init_command': 'SET default_storage_engine=INNODB',
-#     'sql_mode': 'traditional',
-#     'charset': 'utf8mb4',
-# }
+#         'ENGINE': 'django.db.backends.sqlite3',
+#         'NAME': BASE_DIR / 'db.sqlite3',
 #     }
 # }
+#new databases
+
+DATABASES = {
+    'default': {
+        'ENGINE': 'django.db.backends.mysql',
+        'NAME': 'whatsapptext2csv',
+        'USER':'phpmyadmin',
+        'PASSWORD':'Dess@Houston77042',
+        'HOST':'localhost',
+        'PORT':'3306'
+    }
+}
 
 # Password validation
 # https://docs.djangoproject.com/en/3.2/ref/settings/#auth-password-validators
