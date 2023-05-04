@@ -1,0 +1,443 @@
+
+<!DOCTYPE html>
+<html>
+
+<head>
+<title>Edit</title>
+<style>
+     body{
+            margin: 0px;
+            padding: 0px;
+            font-family: system-ui,-apple-system,"Segoe UI",Roboto,"Helvetica Neue","Noto Sans","Liberation Sans",Arial,sans-serif,"Apple Color Emoji","Segoe UI Emoji","Segoe UI Symbol","Noto Color Emoji";
+        }
+.edittt {
+    /* margin-left: 550px;
+    margin-top: 150px; */
+    /* width: 300px;
+    height: 100px;
+    padding: 15px; */
+    /* background-color: aquamarine; */
+    width: 80%;
+    margin: auto;
+    margin-top: 40px;
+}
+.edittable {
+    border-radius: 8px !important;
+    box-shadow: none;
+    padding: 27px;
+    border: 1px solid #e5e7eb;
+    background: #fff;
+}
+/* .edittable tr td textarea{
+    width: 100%;
+    height: 40px;
+    border-radius: 8px;
+    border: 1px solid #591fc9;
+} */
+.subbtn {
+    background: #0b9b3f;
+    border: none;
+    padding: 10px 20px;
+    border-radius: 10px;
+    color: #fff;
+    width: 99.6%;
+    cursor: pointer;
+}
+/* .subbtn:hover {
+  background: #025822;
+} */
+.add_btn_class {
+  content: "plz wait";
+  background: #025822;
+}
+.back {
+    background: #0b9b3f;
+    border: none;
+    padding: 10px 20px;
+    border-radius: 10px;
+    color: #fff;
+    width: 99.6%;
+}
+.form-style-1 {
+	/* margin:10px auto;
+	max-width: 400px;
+	padding: 20px 12px 10px 20px; */
+    padding: 20px 20px 20px 24px;
+    margin: 0px;
+	font: 13px "Lucida Sans Unicode", "Lucida Grande", sans-serif;
+}
+.form-style-1 li {
+	padding: 0;
+	display: block;
+	list-style: none;
+	margin: 10px 0 0 0;
+}
+.form-style-1 label{
+	margin:0 0 3px 0;
+	padding:0px;
+	display:block;
+	font-weight: bold;
+}
+.form-style-1 .field-divided{
+	width: 100%;
+}
+
+.form-style-1 .field-long{
+	width: 99%;
+}
+.form-style-1 .field-select{
+	width: 100%;
+}
+.form-style-1 .field-textarea{
+	height: 30px;
+    border: 1px solid #0b9b3f;
+    border-radius: 8px;
+}
+.form-style-1 input[type=submit], .form-style-1 input[type=button]{
+	background: #4B99AD;
+	padding: 8px 15px 8px 15px;
+	border: none;
+	color: #fff;
+}
+.form-style-1 input[type=submit]:hover, .form-style-1 input[type=button]:hover{
+	background: #4691A4;
+	box-shadow:none;
+	-moz-box-shadow:none;
+	-webkit-box-shadow:none;
+}
+.bord_box {
+    padding: 8px;
+    background: #f9fafb;
+}
+.bord_box form {
+    border: 1px solid #e5e7eb;
+    background: #fff;
+}
+/* toggle switch */
+.switch {
+  position: relative;
+  display: inline-block;
+  width: 60px;
+  height: 34px;
+}
+
+.switch input { 
+  opacity: 0;
+  width: 0;
+  height: 0;
+}
+
+.slider {
+  position: absolute;
+  cursor: pointer;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background-color: #ccc;
+  -webkit-transition: .4s;
+  transition: .4s;
+}
+
+.slider:before {
+  position: absolute;
+  content: "";
+  height: 26px;
+  width: 26px;
+  left: 4px;
+  bottom: 4px;
+  background-color: white;
+  -webkit-transition: .4s;
+  transition: .4s;
+}
+.back_btnn {
+    position: absolute;
+    right: 38px;
+    top: 25px;
+}
+input:checked + .slider {
+  background-color: #2196F3;
+}
+
+input:focus + .slider {
+  box-shadow: 0 0 1px #2196F3;
+}
+
+input:checked + .slider:before {
+  -webkit-transform: translateX(26px);
+  -ms-transform: translateX(26px);
+  transform: translateX(26px);
+}
+
+/* Rounded sliders */
+.slider.round {
+  border-radius: 34px;
+}
+
+.slider.round:before {
+  border-radius: 50%;
+}
+.onetwobtn {
+  padding: 5px 30px;
+  background: #0b9b3f;
+  color: #fff;
+  text-decoration: none;
+  border-radius: 8px;
+}
+.ontwbt {
+  margin: 10px 0px;
+}
+/* .chat_area {
+  height: 140px !important;
+} */
+.statu_s {
+  display: none !important;
+}
+.back {
+    background: #0b9b3f;
+    border: none;
+    padding: 10px 20px;
+    border-radius: 10px;
+    color: #fff;
+    /* width: 99.6%; */
+    text-decoration: none;
+}
+.optio_n {
+  /* background: #0b9b3f; */
+  border: 1px solid #0b9b3f;
+  height: 30px;
+  border-radius: 8px;
+  margin-bottom: 18px;
+}
+.stat ul li {
+  list-style-type: none;
+}
+.stat {
+visibility: hidden;
+}
+button[name="save_home"],
+button[name="save_convert"],
+button[name="save_continue"],
+button[name="chiliadstaffingapi"],
+button[name="careerdesssapi"]{
+  background-color: #4CAF50; /* Green */
+  border: none;
+  color: white;
+  padding: 12px 24px;
+  text-align: center;
+  text-decoration: none;
+  display: inline-block;
+  font-size: 16px;
+  margin: 4px 2px;
+  cursor: pointer;
+  border-radius: 5px;
+}
+
+button[name="save_home"]:hover,
+button[name="save_convert"]:hover,
+button[name="save_continue"]:hover,
+button[name="chiliadstaffingapi"]:hover,
+button[name="careerdesssapi"]:hover {
+  background-color: #3e8e41; /* Darker green on hover */
+}
+.delete-btn {
+        padding: 4px 15px;
+        background: #dc2626;
+        color: #fff;
+        text-decoration: none;
+        border-radius: 20px;
+        font-size: 15px;
+        border: none;
+        cursor: pointer;
+    }
+.delet_e_btn {
+  background-color: red;
+  text-decoration: none;
+    border: none;
+    color: white;
+    padding: 9px 24px;
+    text-align: center;
+    text-decoration: none;
+    display: inline-block;
+    font-size: 16px;
+    margin: 4px 2px;
+    cursor: pointer;
+    border-radius: 5px;
+}    
+.del_btn {
+    background-color: red;
+    border: none;
+    color: white;
+    padding: 5px 24px;
+    text-align: center;
+    text-decoration: none;
+    display: inline-block;
+    font-size: 16px;
+    margin: 4px 2px;
+    cursor: pointer;
+    border-radius: 5px;
+}
+.no_btn {
+  background-color: #4CAF50;
+    border: none;
+    color: white;
+    padding: 5px 24px;
+    text-align: center;
+    text-decoration: none;
+    display: inline-block;
+    font-size: 16px;
+    margin: 4px 2px;
+    cursor: pointer;
+    border-radius: 5px;
+}
+/* button[name="save_home"] {
+  background-color: #f44336; /* Red */
+ */
+
+/* button[name="save_home"]:hover {
+  background-color: #a32b1a; /* Darker red on hover */
+ */
+
+</style>
+</head>
+
+<body>
+
+
+            <div class="bord_box">
+                <div class="back_btnn">
+                    <a class="back" href="{% url 'leads' %}">Back</a>
+                    <!-- <a class="back" href="{% url 'search' %}">Search</a> -->
+                </div>
+            <form action="/leadupdate/{{object.id}}" method="POST">
+                {% csrf_token %}
+                <ul class="form-style-1">
+                    <li>
+                        <label>Date and Time</label>
+                        <!-- <textarea class="field-long field-textarea" name='title'>{{object.title}}</textarea> -->
+                        <input type="text" class="field-long field-textarea" name="title" value="{{object.title}}">
+                    </li>
+                    <li>
+                        <label>Mobile Number</label>
+                        <!-- <textarea class="field-long field-textarea" name="year">{{object.year}}</textarea> -->
+                        <input type="text" class="field-long field-textarea" name="year" value="{{object.year}}">
+                    </li>
+                    <li>
+                        <label>Message</label>
+                        <textarea class="field-long field-textarea chat_area" style="height: 150px;" name="filmurl">{{object.filmurl}}</textarea>
+                    </li>
+                    <li class="statu_s">
+                      <label>Status</label>
+                      <!-- <textarea class="field-long field-textarea" name="checkstatus">{{object.checkstatus}}</textarea> -->
+                      <input type="text" class="field-long field-textarea" name="checkstatus" value="{{object.checkstatus}}">
+                  </li>
+                  
+                  <li>
+                    <label></label>
+                    <!-- <textarea class="field-long field-textarea" name="checkstatus">{{object.checkstatus}}</textarea> -->
+                    <!-- <input type="text" class="field-long field-textarea" name="dropdownlist" value="{{object.dropdownlist}}"> -->
+                    <label for="id_locations">Lead Type</label>
+                    <select  name="dropdownlist" id="dropdownlist" class="optio_n" required="" onchange="add_class_onchange()">
+                    <option  value="{{object.dropdownlist}}" selected="">{{object.dropdownlist}}</option>
+              
+                    <option value="New">New</option>
+                    <option value="Benchsales">Benchsales</option>
+                  
+                    <option value="Requirements">Requirements</option>
+
+                    <option value="3rd party Job posting & Recruitment">3rd party Job posting & Recruitment</option>
+                    <option value="Web content">Web content</option>
+                    <option value="Blog">Blog</option>
+                    <option value="Training">Training</option>
+                    <option value="Presentation">Presentation</option>
+                    <option value="Interview questions">Interview questions</option>
+                    <option value="Misc">Misc</option>
+                      <button class="subbtn">Submit</button>
+                  
+                    </select>
+                </li>
+                <li>
+                  <!-- <button id="add_class" class="subbtn">Submit & Next</button> -->
+                  <!-- <button type="submit" name="save_continue">Save & Continue</button> -->
+                  <!-- <button type="submit" name="delete_d">Delete</button> -->
+                  <button type="submit" name="save_home">Update</button>
+                  <button type="submit" name="save_convert">Update & Convert to Lead</button>
+                  <button type="submit" name="careerdesssapi">Update & Career Desss Lead</button>
+                  <button type="submit" name="chiliadstaffingapi">Update & Chiliadstaffing Lead</button>
+                  <form id="myForm" action="" method="post">
+                    <!-- Your form elements here -->
+                    <a href="#" class="delet_e_btn" onclick="showConfirmDialog()">Delete</a>
+                    <button type="submit" name="delete_dynamic" class="del_btn" id="delete-btn" style="display:none;">Ok</button>
+                  </form>
+                  <!-- <button type="submit" name="save_next">Save & Next</button> -->
+                  <!-- <p>{{errormessage}}</p> -->
+                  <!-- <a href="#">Test</a> -->
+                </li>
+
+                  
+                 
+                            
+                    </li>
+                    
+                    
+                </ul>
+            </form>
+            <div class="stat">
+            <ul>
+              <li>
+                <div style="display:inline-block">
+                  <label>Page Status</label>
+                  <div class="ontwbt">
+                  <a class="onetwobtn" href="{% url 'status' object.id %}">Status {{object.checkstatus}} </a></div></div>
+              </li>
+            </ul>
+          </div>
+            <!-- <script src="https://code.jquery.com/jquery-3.3.1.js"></script> -->
+<!-- <script type="text/javascript">
+$(document).ready(function() {
+    $('#checkbox').change(function() {
+        $.post("/status/", {
+            id: '{{object.id}}', 
+            isworking: this.checked, 
+            csrfmiddlewaretoken: '{{ csrf_token }}' 
+        });
+    });
+}); 
+</script> -->
+<script>
+
+  function add_class_onchange(){
+        var status = this.value;
+        // alert(status);
+        if(status != "")
+        var element = document.getElementById("add_class");
+        element.classList.add("add_btn_class");
+      
+  }
+
+
+// $(function(){
+
+// $("#status").change(function(){
+//     var status = this.value;
+//     alert(status);
+//     if(status != "")
+//     var element = document.getElementById("add_class");
+//         element.classList.add("Your class name");
+//     });
+
+// });
+</script>
+<script>
+  function showConfirmDialog() {
+    if (confirm("Are you sure you want to delete?")) {
+      document.getElementById("delete-btn").click();
+    }
+  }
+</script>
+        </div>
+       </div>
+    </div>
+</body>
+
+</html>
