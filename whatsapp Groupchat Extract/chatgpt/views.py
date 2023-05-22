@@ -66,8 +66,14 @@ class ChatView(ListCreateAPIView):
             else:
                 output_dict[detail] = ""
 
-        print(output_dict)
-        chat = Chat.objects.create(input_text=input_text, output_text=output_dict)
+        # print(output_dict)
+        #dumping output into json format for double quotations
+        output_text = json.dumps(output_dict)
+
+        print(output_text)
+        #saving into database
+        chat = Chat.objects.create(input_text=input_text, output_text=output_text)
+        #chat = Chat.objects.create(input_text=input_text, output_text=output_dict)
         serializer = ChatSerializer(chat)
         return Response(serializer.data)
 
