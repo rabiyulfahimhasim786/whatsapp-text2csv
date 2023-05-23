@@ -41,14 +41,6 @@
     border-radius: 10px;
     color: #fff;
     width: 99.6%;
-    cursor: pointer;
-}
-/* .subbtn:hover {
-  background: #025822;
-} */
-.add_btn_class {
-  content: "plz wait";
-  background: #025822;
 }
 .back {
     background: #0b9b3f;
@@ -202,109 +194,6 @@ input:checked + .slider:before {
     /* width: 99.6%; */
     text-decoration: none;
 }
-.optio_n {
-  /* background: #0b9b3f; */
-  border: 1px solid #0b9b3f;
-  height: 30px;
-  border-radius: 8px;
-  margin-bottom: 18px;
-}
-.stat ul li {
-  list-style-type: none;
-}
-.stat {
-visibility: hidden;
-}
-button[name="save_home"],
-button[name="save_next"],
-button[name="save_continue"]{
-  background-color: #4CAF50; /* Green */
-  border: none;
-  color: white;
-  padding: 12px 24px;
-  text-align: center;
-  text-decoration: none;
-  display: inline-block;
-  font-size: 16px;
-  margin: 4px 2px;
-  cursor: pointer;
-  border-radius: 5px;
-}
-
-button[name="save_home"]:hover,
-button[name="save_next"]:hover,
-button[name="save_continues"]:hover {
-  background-color: #3e8e41; /* Darker green on hover */
-}
-
-.delete-btn {
-        padding: 4px 15px;
-        background: #dc2626;
-        color: #fff;
-        text-decoration: none;
-        border-radius: 20px;
-        font-size: 15px;
-        border: none;
-        cursor: pointer;
-    }
-.delet_e_btn {
-  background-color: red;
-  text-decoration: none;
-    border: none;
-    color: white;
-    padding: 9px 24px;
-    text-align: center;
-    text-decoration: none;
-    display: inline-block;
-    font-size: 16px;
-    margin: 4px 2px;
-    cursor: pointer;
-    border-radius: 5px;
-}    
-.del_btn {
-    background-color: red;
-    border: none;
-    color: white;
-    padding: 5px 24px;
-    text-align: center;
-    text-decoration: none;
-    display: inline-block;
-    font-size: 16px;
-    margin: 4px 2px;
-    cursor: pointer;
-    border-radius: 5px;
-}
-.no_btn {
-  background-color: #4CAF50;
-    border: none;
-    color: white;
-    padding: 5px 24px;
-    text-align: center;
-    text-decoration: none;
-    display: inline-block;
-    font-size: 16px;
-    margin: 4px 2px;
-    cursor: pointer;
-    border-radius: 5px;
-}
-/* button[name="delete_d"] {
-  background-color: #f44336;  */
-.conform_pop {
-  background-color: #fff;
-    border: 1px solid #eee;
-    border-radius: 8px;
-    width: fit-content;
-    padding: 10px;
-    position: absolute;
-    top: 90px;
-    left: 50%;
-    transform: translate(-50% , -50%);
-}
-.conform_pop h3 {
-  padding: 0px;
-  margin: 0px;
-}
-
 </style>
 </head>
 
@@ -313,13 +202,8 @@ button[name="save_continues"]:hover {
 
             <div class="bord_box">
                 <div class="back_btnn">
-                    <a class="back" href="{% url 'home' %}">Back</a>
-                    <!-- <a class="back" href="{% url 'search' %}">Search</a> -->
+                    <a class="back" href="{% url 'retrieve' %}">Back</a>
                 </div>
-                <!-- <form id="delete-btn" method="POST" action="" style="display: none;">
-                  {% csrf_token %}
-                  <input type="hidden" name="delete_dynamic" value="1">
-              </form> -->
             <form action="/update/{{object.id}}" method="POST">
                 {% csrf_token %}
                 <ul class="form-style-1">
@@ -329,12 +213,12 @@ button[name="save_continues"]:hover {
                         <input type="text" class="field-long field-textarea" name="title" value="{{object.title}}">
                     </li>
                     <li>
-                        <label>Mobile Number</label>
+                        <label>Person</label>
                         <!-- <textarea class="field-long field-textarea" name="year">{{object.year}}</textarea> -->
                         <input type="text" class="field-long field-textarea" name="year" value="{{object.year}}">
                     </li>
                     <li>
-                        <label>Message</label>
+                        <label>Chat</label>
                         <textarea class="field-long field-textarea chat_area" style="height: 150px;" name="filmurl">{{object.filmurl}}</textarea>
                     </li>
                     <li class="statu_s">
@@ -342,16 +226,14 @@ button[name="save_continues"]:hover {
                       <!-- <textarea class="field-long field-textarea" name="checkstatus">{{object.checkstatus}}</textarea> -->
                       <input type="text" class="field-long field-textarea" name="checkstatus" value="{{object.checkstatus}}">
                   </li>
-                  
                   <li>
-                    <label></label>
+                    <label>Label</label>
                     <!-- <textarea class="field-long field-textarea" name="checkstatus">{{object.checkstatus}}</textarea> -->
                     <!-- <input type="text" class="field-long field-textarea" name="dropdownlist" value="{{object.dropdownlist}}"> -->
-                    <label for="id_locations">Lead Type</label>
-                    <select  name="dropdownlist" id="dropdownlist" class="optio_n" required="" onchange="add_class_onchange()">
-                    <option  value="{{object.dropdownlist}}" selected="">{{object.dropdownlist}}</option>
+                    <label for="id_locations">Label:</label>
+                    <select name="dropdownlist" required="" id="id_dropdownlist">
+                    <option value="" selected="">---------</option>
               
-                    <option value="New">New</option>
                     <option value="Benchsales">Benchsales</option>
                   
                     <option value="Requirements">Requirements</option>
@@ -368,57 +250,62 @@ button[name="save_continues"]:hover {
                     </select>
                 </li>
                 <li>
-                  <!-- <button id="add_class" class="subbtn">Submit & Next</button> -->
-                  <!-- <button type="submit" name="delete_d">Delete</button> -->
-                  
-                  <button type="submit" name="save_continue">Update & Continue</button>
-                  <button type="submit" name="save_home">Update</button>
-                  <button type="submit" name="save_next">Update & Next</button>
-                  <!-- <button class="" onclick="resetDatabase()">Delete</button> -->
-                  <!-- <a href="#" class="delet_e_btn" onclick="resetDatabase()">Delete</a> -->
-                  <form id="myForm" action="" method="post">
-                    <!-- Your form elements here -->
-                    <a href="#" class="delet_e_btn" onclick="showConfirmDialog()">Delete</a>
-                    <button type="submit" name="delete_dynamic" class="del_btn" id="delete-btn" style="display:none;">Ok</button>
-                  </form>
-                  <!-- <button type="submit" name="delete_dynamic" onclick="resetDatabase()" id="delete-btn">Delete</button> -->
-                  <!-- <button type="submit" name="delete_dynamic" class="del_btn" id="delete-btn" style="display:none;">Ok</button> -->
-                  <!-- <div id="confirm" class="conform_pop" hidden>
-                    <h3>Confirmation</h3>
-                    <p>Are you sure you want to delete this item?</p>
-                   
-                    <button type="submit" name="delete_dynamic" class="del_btn" id="delete-btn">Ok</button>
-                    <button class="no_btn" onclick="confirmNo()">Cancel</button>    
-                  </div> -->
-
-                  <!-- {% block content %}
-                  <div class="container">
-                      <h1>Objects</h1>
-                      <ul>
-                         
-                              <li>
-                                  
-                                  <a href="{% url 'delete' object.id %}" class="btn btn-danger btn-sm">Delete</a>
-                              </li>
-                         
-                      </ul>
-                  </div>
-                  {% endblock %} -->
-
-                 
-                  <!-- <p>{{errormessage}}</p> -->
+                  <button class="subbtn">Submit</button>
                   <!-- <a href="#">Test</a> -->
                 </li>
-
                   
-                 
+                  <!-- <li>
+                    <label>Status</label>
+                    
+                    <select>
+                    <option disabled="true" selected>-----</option>
+                    {% for results in sources %}
+                    <option class="field-long field-textarea" name="checkstatus">{{results}}</option> 
+                    {% endfor %}
+                  </select>
+                  </li> -->
+                    <!-- <li>
+                        <label>Status</label>
+                        <textarea class="field-long field-textarea" name="checkstatus">{{object.checkstatus}}</textarea>
+                    </li> -->
+                    <!-- <li>
+                        <label>Chat</label>
+                        <textarea class="field-long field-textarea" name='genre'>{{object.genre}}</textarea>
+                    </li> -->
+                    <li>
+                    
+                          <!-- <label>Currently working here?{{object.checkstatus}}</label>
+                          <label class="switch">
+                            <input class="field-long field-textarea" type="checkbox" name='checkstatus'>
+                            <span class="slider round"></span>
+                            </label> -->
+                            <!-- <div style="display:inline-block">
+                              <label>Currently working here?{{object.checkstatus}}?{{object.id}}</label>
+                              <a href="{% url 'status' object.id %}">
+                                <label class="switch">
+                                  <input type="checkbox">
+                                  <span class="slider round"></span>
+                                </label>
+                              </a>
+                            </div> -->
+                            <!-- working switch -->
+                            <!-- <div style="display:inline-block">
+                              <label>Page Status</label>
+                              <div class="ontwbt">
+                              <a class="onetwobtn" href="{% url 'status' object.id %}">Status {{object.checkstatus}} </a></div></div> -->
+                              <!-- <label>Currently working here?{{object.checkstatus}} </label> -->
+                              
+                              <!-- <label class="switch">
+                                  <input type="checkbox" id="checkbox" value="{{object.checkstatus}}">
+                                  <span class="slider round"></span>
+                              </label> -->
+                          
                             
                     </li>
                     
                     
                 </ul>
             </form>
-            <div class="stat">
             <ul>
               <li>
                 <div style="display:inline-block">
@@ -427,8 +314,6 @@ button[name="save_continues"]:hover {
                   <a class="onetwobtn" href="{% url 'status' object.id %}">Status {{object.checkstatus}} </a></div></div>
               </li>
             </ul>
-          </div>
-          
             <!-- <script src="https://code.jquery.com/jquery-3.3.1.js"></script> -->
 <!-- <script type="text/javascript">
 $(document).ready(function() {
@@ -441,64 +326,6 @@ $(document).ready(function() {
     });
 }); 
 </script> -->
-<!-- <script>
-
-  function add_class_onchange(){
-        var status = this.value;
-        // alert(status);
-        if(status != "")
-        var element = document.getElementById("add_class");
-        element.classList.add("add_btn_class");
-      
-  }
-
-   //show the confirmation div
-   function resetDatabase() {
-          document.getElementById("confirm").hidden=false
-        }
-        
-        
-        function confirmYes() {
-              location.href = '/resetDatabase.php';
-        }
-        
-        
-        function confirmNo() {
-          document.getElementById("confirm").hidden=true
-        } -->
-
-<!-- 
-// $(function(){
-
-// $("#status").change(function(){
-//     var status = this.value;
-//     alert(status);
-//     if(status != "")
-//     var element = document.getElementById("add_class");
-//         element.classList.add("Your class name");
-//     });
-
-// }); -->
-
-<!--  
-</script> -->
-
-<script>
-  function showConfirmDialog() {
-    if (confirm("Are you sure you want to delete?")) {
-      document.getElementById("delete-btn").click();
-    }
-  }
-</script>
-
-<!-- <script>
-  document.getElementById("delete-btn").addEventListener("click", function(event) {
-      event.preventDefault();
-      if (confirm("Are you sure you want to delete this item?")) {
-          document.getElementById("delete-btn").submit();
-      }
-  });
-  </script> -->
         </div>
        </div>
     </div>

@@ -11,12 +11,6 @@
         .retrieve_table {
         margin-top: 20px;
     }
-    [for="id_datesdata"] { display: none;}
-    #id_datesdata {
-    padding: 4px 10px;
-    border-radius: 15px;
-    border: 1px solid #0b9b3f;
-    }
     .container {
         width: 90%;
         margin: auto;
@@ -30,7 +24,6 @@
         border: none;
         padding: 5px;
         border-collapse: collapse;
-        width: 100%;
         /* width: 90%;
         margin: auto; */
     }
@@ -63,18 +56,16 @@
         border-radius: 20px;
         font-size: 15px;
     }
-    .delete-btn {
+    /* .invidual_delete {
         padding: 10px 20px;
         background: #dc2626;
         color: #fff;
         text-decoration: none;
         border-radius: 20px;
         font-size: 15px;
-        border: none;
-    }
+    } */
     .retrieve_table td {
        line-height: 25px;
-       text-align: center;
     }
     .meg {
         display: inline-block;
@@ -154,12 +145,6 @@
     .check_box{
         text-align: center;
     }
-    .msg {
-        max-width: 600px;
-        overflow: hidden;
-        text-overflow: ellipsis;
-        white-space: nowrap;
-    }
     </style>
 </head>
 
@@ -169,12 +154,11 @@
         <input class="form-control mr-sm-2" name="q" type="search" placeholder="Search" aria-label="Search">
         <button class="btn btn-outline-success my-2 my-sm-0" type="submit">Search</button>
       </form> -->
-      
     <div class="container">
         <div class="top_btns">
         <div>
             <button type="submit" id="delete_btn" class="btn_delete">Delete</button>
-            <!-- <button type="submit" id="snippet_btn" class="btn_snippet">Convert to lead</button> -->
+            <button type="submit" id="snippet_btn" class="btn_snippet">Convert to lead</button>
         </div>
         <!-- <div>
             <button type="submit" id="snippet_btn" class="btn_snippet">convert to lead</button>
@@ -186,29 +170,49 @@
               </form>
         </div>
         <div>
-            <input type="date" id="date_filter" class="searc_h">
-            <button id="filter_btn" class="searc_h_btn">Filter</button>
-        </div>
-        <!-- <div>
-            <form method="get" action="{% url 'home' %}">
+            <form method="get" action="{% url 'retrieve' %}">
                 
-              
-                 {{ datesdatalist }}
+                <!-- {{ label_list }} -->
+                <label>Lead type</label>
+                <select name="label" required="" id="id_label" class="select_opt">
+                    <option value="" selected="">---------</option>
+                  
+                    <!-- <option value=""></option> -->
+                  
+                    <option value="Requirements">Requirements</option>
+                  
+                    <option value="Interview questions">Interview questions</option>
+                  
+                    <option value="Benchsales">Benchsales</option>
+                  
+                    <option value="Web content">Web content</option>
+                  
+                    <option value="Blog">Blog</option>
+                  
+                    <option value="Misc">Misc</option>
+                  
+                    <option value="Presentation">Presentation</option>
+                  
+                    <option value="Training">Training</option>
+                  
+                    <option value="3rd party Job posting &amp; Recruitment">3rd party Job posting &amp; Recruitment</option>
+                  
+                  </select>
                 <input class="submi_t_btn" type="submit" >
             </form>
-        </div> -->
-        
-        <!-- <div>
-            <form method="get" action="{% url 'home' %}"> -->
+        </div>
+        <div>
+            <form method="get" action="{% url 'leads' %}">
                 
                 <!-- {{ label_list }} -->
                 <!-- <label>Lead type</label>
                 <select name="label" required="" id="id_label" class="select_opt">
                     <option value="" selected="">Please select a value</option>
-                   -->
-                    <!-- <option value=""></option> -->
-                    <!-- <option value="New">New</option>
-                    <option value="Benchsales">Benchsales</option>
+                  
+                     -->
+                  
+                    <!-- <option value="New">New</option> -->
+                    <!-- <option value="Benchsales">Benchsales</option>
                   
                     <option value="Requirements">Requirements</option>
 
@@ -219,50 +223,43 @@
                     <option value="Presentation">Presentation</option>
                     <option value="Interview questions">Interview questions</option>
                     <option value="Misc">Misc</option>
-                  </select>
+                  
+                  </select> -->
                 <input class="submi_t_btn" type="submit" >
             </form>
-        </div> -->
+        </div>
         </div>
         <table class="retrieve_table" border="5px solid #000;">
             <tbody>
                 <thead>
                     <tr>
-                        <th></th>
-                        <th>Date</th>
-                        <th>Time</th>
-                        <!-- <th>Date and Time</th> -->
-                        <th>Mobile Number</th>
-                        <th>Message</th>
+                        <th width="15%"></th>
+                        <th width="15%">Date and Time</th>
+                        <th width="15%">Mobile Number</th>
+                        <th width="50%">Message</th>
                         <th>Lead type</th>
                         <!-- <th>Message</th> -->
-                        <th>Edit</th>
-                        <th>Delete</th>
+                        <th width="10%">Edit</th>
+                        <th width="10%">Delete</th>
                     </tr>
                 </thead>
                 <tbody>
                     {%csrf_token %}
                     {% for i in details %}
                    
-                    
                     {% if i.checkstatus == 1 %}
                     <tr id="{{i.id}}">
                         <td class="check_box"><input type="checkbox" name="product_id[]" value="{{i.id}}" id="retrieve"></td>
-                        <!-- <td style="padding:10px;" >{{i.date}}</td> -->
-                        <td style="padding:10px;">{{i.date}}</td>
                         <td style="padding:10px;">{{i.title}}</td>
                         <td style="padding:10px;">{{i.year}}</td>
-                        <td style="padding:10px;" class="msg">{{i.filmurl}} Contrary to popular belief, Lorem Ipsum is not simply random text. It has roots in a piece of classical Latin literature from 45 BC, making it over 2000 years old. Richard McClintock, a Latin professor at Hampden-Sydney College in Virginia, looked up one of the more obscure Latin words, consectetur, from a Lorem Ipsum passage, and going through the cites of the word in classical literature, discovered the undoubtable source. Lorem Ipsum comes from sections 1.10.32 and 1.10.33 of "de Finibus Bonorum et Malorum" (The Extremes of Good and Evil) by Cicero, written in 45 BC. This book is a treatise on the theory of ethics, very popular during the Renaissance. The first line of Lorem Ipsum, "Lorem ipsum dolor sit amet..", comes from a line in section 1.10.32.
-
-                            The standard chunk of Lorem Ipsum used since the 1500s is reproduced below for those interested. Sections 1.10.32 and 1.10.33 from "de Finibus Bonorum et Malorum" by Cicero are also reproduced in their exact original form, accompanied by English versions from the 1914 translation by H. Rackham.</td>
+                        <td style="padding:10px;">{{i.filmurl}}</td>
                         <td style="padding:10px;">{{i.dropdownlist}}</td>
                         <!-- <td style="padding:10px;" class="meg">{{i.genre}}</td> -->
                         <td style="padding:10px;text-align: center;"><a class="editbtn" href="{% url 'edit' i.pk %}">Edit</a></td>
-                        <!-- <td style="padding:10px;text-align: center;"><a class="deletebtn" href="{% url 'delete' i.pk %}">Delete</a></td> -->
-                        <td style="padding:10px;"><button class="delete-btn" data-id="{{ i.id }}">Delete</button></td>
+                        <td style="padding:10px;text-align: center;"><a class="deletebtn" href="{% url 'delete' i.pk %}">Delete</a></td>
+                        <!-- <td style="padding:10px;text-align: center;"><button type="submit" id="invidual_delete" class="invidual_delete">Delete</button></td> -->
                     </tr>
                     {% endif %}
-                    
                     {% endfor %}
                 </tbody>
             </tbody>
@@ -345,70 +342,33 @@
 
     <!-- ####
     ###invidual delete functions ajaxs -->
-
     <script>
-    $(document).ready(function(){
-    $('.delete-btn').click(function(){
-        var id = $(this).data('id');
-        if(confirm("Are you sure you want to delete this item?")){
-            var csrf=$('input[name=csrfmiddlewaretoken]').val();
-            $.ajax({
-                url: '.',
-                method: "POST",
-                data: {
-                    id: id,
-                    csrfmiddlewaretoken: csrf
-                },
-                success: function(response){
-                    $('tr#'+id+'').css('background-color', '#ccc');
-                    $('tr#'+id+'').fadeOut('slow');
-                    window.location.href = '/retrieve';
-                }
-            });
-        }
-    });
-});
+//         <script>
+//     $(document).ready(function(){
+//         $('.invidual_delete').click(function(){
+//             var id = $(this).val();
+//             if(confirm("Are you sure you want to delete this item?")){
+//                 var csrf=$('input[name=csrfmiddlewaretoken]').val();
+//                 console.log(id)
+//                 $.ajax({
+//                     url:'.',
+//                     method:"POST",
+//                     data:{
+//                         id: [id],
+//                         csrfmiddlewaretoken:csrf
+//                     },
+//                     success:function(response){
+//                         $('tr#'+id+'').css('background-color', '#ccc');
+//                         $('tr#'+id+'').fadeOut('slow');
+//                         window.location.href = '/retrieve'
+//                     }
+//                 })
+//             }                 
+//         })
+//     })
+// </script>
 
     </script>
-
-<!-- datefilterations -->
-<!-- <script>
-    $(document).ready(function() {
-    $('#filter_btn').click(function() {
-        var selectedDate = $('#date_filter').val();
-        if (selectedDate !== '') {
-            $('tr').hide();
-            $('td:nth-child(2)').each(function() {
-                if ($(this).text() === selectedDate) {
-                    $(this).closest('tr').show();
-                }
-            });
-        } else {
-            $('tr').show();
-        }
-    });
-});
-
-</script> -->
-<script>
-    $(document).ready(function() {
-        $('#filter_btn').click(function() {
-            var selectedDate = $('#date_filter').val();
-            if (selectedDate !== '') {
-                $('tr:not(:first)').hide(); // Hide all rows except the first row (header)
-                $('td:nth-child(2)').each(function() {
-                    if ($(this).text() === selectedDate) {
-                        $(this).closest('tr').show();
-                    }
-                });
-            } else {
-                $('tr').show();
-            }
-        });
-    });
-    </script>
-
- 
     <!-- <script>
         $(document).ready(function(){
             $('#delete_btn').click(function(){
@@ -475,18 +435,7 @@
             })
         })
     </script> -->
-    <!-- <script>
-        function formatDate(dateStr) {
-          const date = new Date(dateStr);
-          const options = { month: 'short', day: 'numeric', year: 'numeric' };
-          return date.toLocaleDateString('en-US', options);
-        }
-      </script>
-       <script>
-        const dateStr = '2022-11-16';
-        const formattedDate = formatDate(dateStr);
-        document.getElementById('formattedDate').textContent = formattedDate;
-      </script> -->
+
 </body>
 
 </html>

@@ -1,0 +1,183 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>End of Navigation</title>
+    <style>
+      /* Add CSS styles for the message here */
+      body {
+        font-family: Arial, sans-serif;
+      }
+      h1 {
+        color: red;
+      }
+    </style>
+     
+     <style>
+         body{
+             margin: 0px;
+             padding: 0px;
+             font-family: system-ui,-apple-system,"Segoe UI",Roboto,"Helvetica Neue","Noto Sans","Liberation Sans",Arial,sans-serif,"Apple Color Emoji","Segoe UI Emoji","Segoe UI Symbol","Noto Color Emoji";
+         }
+         .retrieve_table {
+         margin-top: 20px;
+     }
+     .container {
+         width: 90%;
+         margin: auto;
+     }
+     table {
+         /* * margin-left: 550px;
+         margin-top: 150px; * */
+         column-width: 20px;
+         font-size: 15px;
+         border: 5px solid black; 
+         border: none;
+         padding: 5px;
+         border-collapse: collapse;
+         /* width: 90%;
+         margin: auto; */
+     }
+     thead {
+         padding: 10px;
+         background: #0b9b3f;
+         color: #fff;
+     }
+     tr:nth-child(even){background-color: #ebe1ff}
+     tbody {
+         padding: 10px;
+     }
+     .retrieve_table th {
+         border: none;
+         
+     }
+     .editbtn {
+         padding: 10px 20px;
+         background: #0b9b3f;
+         color: #fff;
+         text-decoration: none;
+         border-radius: 20px;
+         font-size: 15px;
+     }
+     .deletebtn {
+         padding: 10px 20px;
+         background: #dc2626;
+         color: #fff;
+         text-decoration: none;
+         border-radius: 20px;
+         font-size: 15px;
+     }
+     .delete-btn {
+         padding: 10px 20px;
+         background: #dc2626;
+         color: #fff;
+         text-decoration: none;
+         border-radius: 20px;
+         font-size: 15px;
+     }
+     .retrieve_table td {
+        line-height: 25px;
+     }
+     .meg {
+         display: inline-block;
+         width: 200px;
+         white-space: nowrap;
+         overflow: hidden !important;
+         text-overflow: ellipsis;
+         border: none;
+     }
+     .top_btns {
+         display: flex;
+         justify-content: space-between;
+         margin-top: 15px;
+     }
+     .btn_delete {
+         padding: 4px 15px;
+         background: #dc2626;
+         color: #fff;
+         text-decoration: none;
+         border-radius: 20px;
+         font-size: 15px;
+         border: none;
+         cursor: pointer;
+     }
+     .btn_delete:hover {
+         background: #790505;
+     }
+     .btn_snippet {
+         padding: 4px 15px;
+         background: #0b9b3f;
+         color: #fff;
+         text-decoration: none;
+         border-radius: 20px;
+         font-size: 15px;
+         border: none;
+         cursor: pointer;
+     }
+     .btn_snippet:hover {
+         background: #01471b;
+     }
+     .searc_h {
+         padding: 4px 10px;
+         border-radius: 15px;
+         border: 1px solid #0b9b3f;
+     }
+     .searc_h_btn {
+         padding: 4px 15px;
+         background: #0b9b3f;
+         color: #fff;
+         text-decoration: none;
+         border-radius: 20px;
+         font-size: 15px;
+         border: none;
+         cursor: pointer;
+     }
+     .searc_h_btn:hover {
+         background: #01471b;
+     }
+     .select_opt {
+         padding: 4px 10px;
+         border-radius: 15px;
+         border: 1px solid #0b9b3f;
+     }
+     .submi_t_btn {
+         padding: 4px 15px;
+         background: #0b9b3f;
+         color: #fff;
+         text-decoration: none;
+         border-radius: 20px;
+         font-size: 15px;
+         border: none;
+         cursor: pointer;
+     }
+     .submi_t_btn:hover {
+         background: #01471b;
+     }
+     .check_box{
+         text-align: center;
+     }
+     .Navigation-page{
+      width: 50%;
+    padding: 10px;
+    height: auto;
+    border-radius: 20px !important;
+    margin: 20px auto;
+    box-shadow: rgb(14 30 37 / 12%) 0px 2px 4px 0px, rgb(14 30 37 / 32%) 0px 2px 16px 0px;
+    border: 1px solid #8f8f8f;
+     }
+     </style>
+  </head>
+  <body>
+    {% include 'header.html' %}
+
+    <div class="Navigation-page">
+      <h1>End of Navigation Reached</h1>
+      <p>There are no more objects to navigate.</p>
+    </div>
+    <!-- <div class="back_btnn">
+      <p>you would like to vist these below pages</p>
+      <a class="back" href="{% url 'home' %}">Home</a>
+      <a class="back" href="{% url 'leads' %}">Leads</a> -->
+      <!-- <a class="back" href="{% url 'search' %}">Search</a> -->
+  <!-- </div> -->
+  </body>
+</html>
