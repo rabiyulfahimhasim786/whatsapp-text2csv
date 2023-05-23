@@ -1,7 +1,7 @@
 from django import forms
 
 from . models import whatsapp,Film
-
+import django_filters
 
 class WhatsappForm(forms.ModelForm):
     class Meta:
@@ -30,3 +30,20 @@ class LabelChoiceField(forms.Form):
         queryset=Film.objects.values_list("dropdownlist", flat=True).distinct(),
         #empty_label=None
     )
+
+
+class DateChoiceField(forms.Form):
+
+    datesdata = forms.ModelChoiceField(
+        queryset=Film.objects.values_list("title", flat=True).distinct(),
+        #empty_label=None
+    )
+
+
+# class EventFilterForm(forms.Form):
+#     # date = forms.DateField()
+
+#     def filter_events(self):
+#         filtered_date = self.cleaned_data['title']
+#         events = Film.objects.filter(date=filtered_date)
+#         return events

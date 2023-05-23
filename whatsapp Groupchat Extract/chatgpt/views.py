@@ -53,10 +53,8 @@ class ChatView(ListCreateAPIView):
         # output_array = output_text.split('\n')
         # datalist = list(filter(lambda x: len(x) > 0, output_array))
         response = json.loads(output_text)
-        # response = json.loads(output_text.replace("'", '"'))
         print(response)        
-        # details = ['H1', 'H2', 'MetaTitle', 'Content', 'MetaKeywords', 'MetaMisc']
-        details = ["H1", "H2", "MetaTitle", "Content", "MetaKeywords", "MetaMisc"]
+        details = ['H1', 'H2', 'MetaTitle', 'Content', 'MetaKeywords', 'MetaMisc']
 
         output_dict = {}
 
@@ -64,13 +62,18 @@ class ChatView(ListCreateAPIView):
             if int(len(response)) == 6:
                 output_dict = response
             elif detail in response:
-                output_dict[detail] = json.dumps(response[detail])
+                output_dict[detail] = response[detail]
             else:
-                output_dict[detail] = json.dumps("")
+                output_dict[detail] = ""
 
-        print(output_dict)
-        chat = Chat.objects.create(input_text=input_text, output_text=output_dict)
-        print(output_dict)
+        # print(output_dict)
+        #dumping output into json format for double quotations
+        output_text = json.dumps(output_dict)
+
+        print(output_text)
+        #saving into database
+        chat = Chat.objects.create(input_text=input_text, output_text=output_text)
+        #chat = Chat.objects.create(input_text=input_text, output_text=output_dict)
         serializer = ChatSerializer(chat)
         return Response(serializer.data)
 
@@ -118,10 +121,7 @@ class GptView(ListCreateAPIView):
         #         output_dict[detail] = ""
 
         # print(output_dict)
-        output_querys_value = output_query.rstrip()
-        chat = Gpt.objects.create(input_query=input_query, output_query=output_querys_value)
-        # new_string = output_query.rstrip()
-        print(output_querys_value)
+        chat = Gpt.objects.create(input_query=input_query, output_query=output_query)
         serializer = GptSerializer(chat)
         return Response(serializer.data)
 
