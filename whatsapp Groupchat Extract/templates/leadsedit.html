@@ -216,8 +216,10 @@ input:checked + .slider:before {
 visibility: hidden;
 }
 button[name="save_home"],
-button[name="save_next"],
-button[name="save_continue"]{
+button[name="save_convert"],
+button[name="save_continue"],
+button[name="chiliadstaffingapi"],
+button[name="careerdesssapi"]{
   background-color: #4CAF50; /* Green */
   border: none;
   color: white;
@@ -232,11 +234,12 @@ button[name="save_continue"]{
 }
 
 button[name="save_home"]:hover,
-button[name="save_next"]:hover,
-button[name="save_continues"]:hover {
+button[name="save_convert"]:hover,
+button[name="save_continue"]:hover,
+button[name="chiliadstaffingapi"]:hover,
+button[name="careerdesssapi"]:hover {
   background-color: #3e8e41; /* Darker green on hover */
 }
-
 .delete-btn {
         padding: 4px 15px;
         background: #dc2626;
@@ -287,23 +290,25 @@ button[name="save_continues"]:hover {
     cursor: pointer;
     border-radius: 5px;
 }
-/* button[name="delete_d"] {
-  background-color: #f44336;  */
-.conform_pop {
-  background-color: #fff;
-    border: 1px solid #eee;
-    border-radius: 8px;
-    width: fit-content;
-    padding: 10px;
-    position: absolute;
-    top: 90px;
-    left: 50%;
-    transform: translate(-50% , -50%);
+#success-desss {
+    text-align: center;
+    position: relative;
+    top: -590px;
+    font-weight: bold;
 }
-.conform_pop h3 {
-  padding: 0px;
-  margin: 0px;
+#success-message {
+    text-align: center;
+    position: relative;
+    top: -590px;
+    font-weight: bold;
 }
+/* button[name="save_home"] {
+  background-color: #f44336; /* Red */
+ */
+
+/* button[name="save_home"]:hover {
+  background-color: #a32b1a; /* Darker red on hover */
+ */
 
 </style>
 </head>
@@ -313,18 +318,19 @@ button[name="save_continues"]:hover {
 
             <div class="bord_box">
                 <div class="back_btnn">
-                    <a class="back" href="{% url 'home' %}">Back</a>
+                    <a class="back" href="{% url 'leads' %}">Back</a>
                     <!-- <a class="back" href="{% url 'search' %}">Search</a> -->
                 </div>
-                <!-- <form id="delete-btn" method="POST" action="" style="display: none;">
-                  {% csrf_token %}
-                  <input type="hidden" name="delete_dynamic" value="1">
-              </form> -->
-            <form action="/update/{{object.id}}" method="POST">
+            <form action="/leadupdate/{{object.id}}" method="POST">
                 {% csrf_token %}
                 <ul class="form-style-1">
                     <li>
-                        <label>Date and Time</label>
+                      <label>Date</label>
+                      <!-- <textarea class="field-long field-textarea" name='title'>{{object.title}}</textarea> -->
+                      <input type="text" class="field-long field-textarea" name="date" value="{{object.date}}">
+                   </li>
+                    <li>
+                        <label>Time</label>
                         <!-- <textarea class="field-long field-textarea" name='title'>{{object.title}}</textarea> -->
                         <input type="text" class="field-long field-textarea" name="title" value="{{object.title}}">
                     </li>
@@ -369,43 +375,21 @@ button[name="save_continues"]:hover {
                 </li>
                 <li>
                   <!-- <button id="add_class" class="subbtn">Submit & Next</button> -->
+                  <!-- <button type="submit" name="save_continue">Save & Continue</button> -->
                   <!-- <button type="submit" name="delete_d">Delete</button> -->
-                  
-                  <button type="submit" name="save_continue">Update & Continue</button>
                   <button type="submit" name="save_home">Update</button>
-                  <button type="submit" name="save_next">Update & Next</button>
-                  <!-- <button class="" onclick="resetDatabase()">Delete</button> -->
-                  <!-- <a href="#" class="delet_e_btn" onclick="resetDatabase()">Delete</a> -->
+                  <button type="submit" name="save_convert">Update & Convert to Lead</button>
+                  <button name="careerdesssapi" type="submit" class="btn btn-success">Update & Career Desss Lead</button>
+                  <button name="chiliadstaffingapi" type="submit" class="btn btn-success">Update & Chiliadstaffing Lead</button>
+
+                  <!-- <button type="submit" name="careerdesssapi">Update & Career Desss Lead</button> -->
+                  <!-- <button type="submit" name="chiliadstaffingapi">Update & Chiliadstaffing Lead</button> -->
                   <form id="myForm" action="" method="post">
                     <!-- Your form elements here -->
                     <a href="#" class="delet_e_btn" onclick="showConfirmDialog()">Delete</a>
                     <button type="submit" name="delete_dynamic" class="del_btn" id="delete-btn" style="display:none;">Ok</button>
                   </form>
-                  <!-- <button type="submit" name="delete_dynamic" onclick="resetDatabase()" id="delete-btn">Delete</button> -->
-                  <!-- <button type="submit" name="delete_dynamic" class="del_btn" id="delete-btn" style="display:none;">Ok</button> -->
-                  <!-- <div id="confirm" class="conform_pop" hidden>
-                    <h3>Confirmation</h3>
-                    <p>Are you sure you want to delete this item?</p>
-                   
-                    <button type="submit" name="delete_dynamic" class="del_btn" id="delete-btn">Ok</button>
-                    <button class="no_btn" onclick="confirmNo()">Cancel</button>    
-                  </div> -->
-
-                  <!-- {% block content %}
-                  <div class="container">
-                      <h1>Objects</h1>
-                      <ul>
-                         
-                              <li>
-                                  
-                                  <a href="{% url 'delete' object.id %}" class="btn btn-danger btn-sm">Delete</a>
-                              </li>
-                         
-                      </ul>
-                  </div>
-                  {% endblock %} -->
-
-                 
+                  <!-- <button type="submit" name="save_next">Save & Next</button> -->
                   <!-- <p>{{errormessage}}</p> -->
                   <!-- <a href="#">Test</a> -->
                 </li>
@@ -428,7 +412,6 @@ button[name="save_continues"]:hover {
               </li>
             </ul>
           </div>
-          
             <!-- <script src="https://code.jquery.com/jquery-3.3.1.js"></script> -->
 <!-- <script type="text/javascript">
 $(document).ready(function() {
@@ -441,7 +424,7 @@ $(document).ready(function() {
     });
 }); 
 </script> -->
-<!-- <script>
+<script>
 
   function add_class_onchange(){
         var status = this.value;
@@ -452,22 +435,7 @@ $(document).ready(function() {
       
   }
 
-   //show the confirmation div
-   function resetDatabase() {
-          document.getElementById("confirm").hidden=false
-        }
-        
-        
-        function confirmYes() {
-              location.href = '/resetDatabase.php';
-        }
-        
-        
-        function confirmNo() {
-          document.getElementById("confirm").hidden=true
-        } -->
 
-<!-- 
 // $(function(){
 
 // $("#status").change(function(){
@@ -478,11 +446,8 @@ $(document).ready(function() {
 //         element.classList.add("Your class name");
 //     });
 
-// }); -->
-
-<!--  
-</script> -->
-
+// });
+</script>
 <script>
   function showConfirmDialog() {
     if (confirm("Are you sure you want to delete?")) {
@@ -492,13 +457,61 @@ $(document).ready(function() {
 </script>
 
 <!-- <script>
-  document.getElementById("delete-btn").addEventListener("click", function(event) {
-      event.preventDefault();
-      if (confirm("Are you sure you want to delete this item?")) {
-          document.getElementById("delete-btn").submit();
-      }
+  document.querySelector("button[name='chiliadstaffingapi']").addEventListener("click", function() {
+      // Your code to perform the button click action goes here
+
+      // Display success message
+      alert("Your lead has been updated to chiliadstaffing.com successfully!");
   });
-  </script> -->
+
+  document.querySelector("button[name='careerdesssapi']").addEventListener("click", function() {
+      // Your code to perform the button click action goes here
+
+      // Display success message
+      alert("Your lead has been updated to career.desss.com successfully!");
+  });
+</script> -->
+
+<div id="success-message" style="display:none;">Your lead has been updated to chiliadstaffing.com successfully!</div>
+<div id="success-desss" style="display:none;">Your lead has been updated to career.desss.com successfully!</div>
+
+<script>
+  document.querySelector("button[name='chiliadstaffingapi']").addEventListener("click", function() {
+      // Your code to perform the button click action goes here
+
+      // Show success message
+      document.getElementById("success-message").style.display = "block";
+  });
+
+  document.querySelector("button[name='careerdesssapi']").addEventListener("click", function() {
+      // Your code to perform the button click action goes here
+
+      // Show success message
+      document.getElementById("success-desss").style.display = "block";
+  });
+</script>
+
+<!-- <script>
+  document.querySelector("button[name='chiliadstaffingapi']").addEventListener("click", function() {
+      // Your code to perform the button click action goes here
+
+      // Show success message after 3 seconds
+      setTimeout(function() {
+          document.getElementById("success-message").style.display = "block";
+      }, 2000);
+  });
+
+  document.querySelector("button[name='careerdesssapi']").addEventListener("click", function() {
+      // Your code to perform the button click action goes here
+
+      // Show success message after 3 seconds
+      setTimeout(function() {
+          document.getElementById("success-desss").style.display = "block";
+      }, 2000);
+  });
+</script> -->
+
+
         </div>
        </div>
     </div>

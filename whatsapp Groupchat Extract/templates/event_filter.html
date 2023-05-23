@@ -1,0 +1,19 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <title>events</title>
+    </head>
+    <body>
+        <form method="GET" action="">
+            {{ form.as_p }}
+            <button type="submit">Filter</button>
+        </form>
+        
+        {% for event in events %}
+            <p>{{event}}</p>
+            <!-- display event details -->
+        {% endfor %}
+        
+
+    </body>
+</html>
