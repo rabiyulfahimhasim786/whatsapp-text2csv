@@ -37,10 +37,7 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
-    'core.apps.CoreConfig',
-    'chatgpt.apps.ChatgptConfig',
-    'rest_framework',
-    # 'django_filters',
+    'core',
 ]
 
 MIDDLEWARE = [
@@ -77,36 +74,23 @@ WSGI_APPLICATION = 'mysite.wsgi.application'
 # Database
 # https://docs.djangoproject.com/en/3.2/ref/settings/#databases
 
+#old database
 # DATABASES = {
 #     'default': {
 #         'ENGINE': 'django.db.backends.sqlite3',
 #         'NAME': BASE_DIR / 'db.sqlite3',
 #     }
 # }
+#new databases
 
-# DATABASES = {
-#     'default': {
-#         'ENGINE': 'django.db.backends.sqlite3',
-#         'NAME': BASE_DIR / 'db.sqlite3',
-#     }
-# }
-
-# data bases 2
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.mysql',
-        'NAME': 'whatsappupdated',
+        'NAME': 'whatsapptext2csv',
         'USER':'phpmyadmin',
         'PASSWORD':'Dess@Houston77042',
-        # 'USER': 'root',  
-        # 'PASSWORD': '',  
         'HOST':'localhost',
-        'PORT':'3306',
-        'OPTIONS': {
-   'init_command': 'SET default_storage_engine=INNODB',
-    'sql_mode': 'traditional',
-    'charset': 'utf8mb4',
-}
+        'PORT':'3306'
     }
 }
 

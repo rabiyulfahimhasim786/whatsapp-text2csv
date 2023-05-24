@@ -40,7 +40,6 @@ INSTALLED_APPS = [
     'core.apps.CoreConfig',
     'chatgpt.apps.ChatgptConfig',
     'rest_framework',
-    # 'django_filters',
 ]
 
 MIDDLEWARE = [
@@ -84,18 +83,11 @@ WSGI_APPLICATION = 'mysite.wsgi.application'
 #     }
 # }
 
-# DATABASES = {
-#     'default': {
-#         'ENGINE': 'django.db.backends.sqlite3',
-#         'NAME': BASE_DIR / 'db.sqlite3',
-#     }
-# }
-
 # data bases 2
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.mysql',
-        'NAME': 'whatsappupdated',
+        'NAME': 'whatsappdb',
         'USER':'phpmyadmin',
         'PASSWORD':'Dess@Houston77042',
         # 'USER': 'root',  
