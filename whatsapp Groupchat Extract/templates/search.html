@@ -162,6 +162,7 @@
             <input class="form-control mr-sm-2 searc_h" name="q" type="search" placeholder="Search" aria-label="Search">
             <button class="btn btn-outline-success my-2 my-sm-0 searc_h_btn" type="submit">Search</button>
           </form>
+       
           <!-- <div>
             <select id="searchdd1" onclick="searchdata();">
                 <option disabled="true" selected>-----</option>
@@ -182,6 +183,8 @@
                     <option value="0">0</option> -->
                 <!-- <input type="submit" >
             </form> -->
+            <!-- <input type="date" id="date_filter" class="searc_h">
+            <button id="filter_btn" class="searc_h_btn">Filter</button> -->
             <form method="get" action="{% url 'search' %}">
                 
                 <!-- {{ label_list }} -->
@@ -213,6 +216,10 @@
                 <input class="submi_t_btn" type="submit" >
             </form>
         </div>
+        <!-- <div>
+            <input type="date" id="date_filter" class="searc_h">
+            <button id="filter_btn" class="searc_h_btn">Filter</button>
+        </div> -->
           <!-- <div>
             <button type="submit" id="delete_btn" class="btn_delete">Delete</button>
         </div> -->
@@ -222,7 +229,9 @@
                 <thead>
                     <tr>
                         <!-- <th width="15%"></th> -->
-                        <th width="15%">Date and Time</th>
+                        <!-- <th width="15%">Date and Time</th> -->
+                        <th width="10%">Date</th>
+                        <th width="10%">Time</th>
                         <th width="15%">Mobile Number</th>
                         <th width="50%">Message</th>
                         <!-- <th>status</th> -->
@@ -240,6 +249,7 @@
                     <tr>
                     <!-- <tr  id="{{i.id}}"> -->
                         <!-- <td><input type="checkbox" name="product_id[]" value="{{i.id}}" id="delete_product"></td> -->
+                        <td style="padding:10px;">{{i.date}}</td>
                         <td style="padding:10px;">{{i.title}}</td>
                         <td style="padding:10px;">{{i.year}}</td>
                         <td style="padding:10px;">{{i.filmurl}}</td>
@@ -291,7 +301,23 @@
             })
         })
     </script> -->
-
+    <!-- <script>
+        $(document).ready(function() {
+            $('#filter_btn').click(function() {
+                var selectedDate = $('#date_filter').val();
+                if (selectedDate !== '') {
+                    $('tr:not(:first)').hide(); // Hide all rows except the first row (header)
+                    $('td:nth-child(2)').each(function() {
+                        if ($(this).text() === selectedDate) {
+                            $(this).closest('tr').show();
+                        }
+                    });
+                } else {
+                    $('tr').show();
+                }
+            });
+        });
+    </script> -->
 </body>
 
 </html>

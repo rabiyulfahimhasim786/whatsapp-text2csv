@@ -217,7 +217,9 @@ visibility: hidden;
 }
 button[name="save_home"],
 button[name="save_convert"],
-button[name="save_continue"]{
+button[name="save_continue"],
+button[name="chiliadstaffingapi"],
+button[name="careerdesssapi"]{
   background-color: #4CAF50; /* Green */
   border: none;
   color: white;
@@ -233,10 +235,73 @@ button[name="save_continue"]{
 
 button[name="save_home"]:hover,
 button[name="save_convert"]:hover,
-button[name="save_continue"]:hover {
+button[name="save_continue"]:hover,
+button[name="chiliadstaffingapi"]:hover,
+button[name="careerdesssapi"]:hover {
   background-color: #3e8e41; /* Darker green on hover */
 }
-
+.delete-btn {
+        padding: 4px 15px;
+        background: #dc2626;
+        color: #fff;
+        text-decoration: none;
+        border-radius: 20px;
+        font-size: 15px;
+        border: none;
+        cursor: pointer;
+    }
+.delet_e_btn {
+  background-color: red;
+  text-decoration: none;
+    border: none;
+    color: white;
+    padding: 9px 24px;
+    text-align: center;
+    text-decoration: none;
+    display: inline-block;
+    font-size: 16px;
+    margin: 4px 2px;
+    cursor: pointer;
+    border-radius: 5px;
+}    
+.del_btn {
+    background-color: red;
+    border: none;
+    color: white;
+    padding: 5px 24px;
+    text-align: center;
+    text-decoration: none;
+    display: inline-block;
+    font-size: 16px;
+    margin: 4px 2px;
+    cursor: pointer;
+    border-radius: 5px;
+}
+.no_btn {
+  background-color: #4CAF50;
+    border: none;
+    color: white;
+    padding: 5px 24px;
+    text-align: center;
+    text-decoration: none;
+    display: inline-block;
+    font-size: 16px;
+    margin: 4px 2px;
+    cursor: pointer;
+    border-radius: 5px;
+}
+#success-desss {
+    text-align: center;
+    position: relative;
+    top: -590px;
+    font-weight: bold;
+}
+#success-message {
+    text-align: center;
+    position: relative;
+    top: -590px;
+    font-weight: bold;
+}
 /* button[name="save_home"] {
   background-color: #f44336; /* Red */
  */
@@ -260,7 +325,12 @@ button[name="save_continue"]:hover {
                 {% csrf_token %}
                 <ul class="form-style-1">
                     <li>
-                        <label>Date and Time</label>
+                      <label>Date</label>
+                      <!-- <textarea class="field-long field-textarea" name='title'>{{object.title}}</textarea> -->
+                      <input type="text" class="field-long field-textarea" name="date" value="{{object.date}}">
+                   </li>
+                    <li>
+                        <label>Time</label>
                         <!-- <textarea class="field-long field-textarea" name='title'>{{object.title}}</textarea> -->
                         <input type="text" class="field-long field-textarea" name="title" value="{{object.title}}">
                     </li>
@@ -309,6 +379,16 @@ button[name="save_continue"]:hover {
                   <!-- <button type="submit" name="delete_d">Delete</button> -->
                   <button type="submit" name="save_home">Update</button>
                   <button type="submit" name="save_convert">Update & Convert to Lead</button>
+                  <button name="careerdesssapi" type="submit" class="btn btn-success">Update & Career Desss Lead</button>
+                  <button name="chiliadstaffingapi" type="submit" class="btn btn-success">Update & Chiliadstaffing Lead</button>
+
+                  <!-- <button type="submit" name="careerdesssapi">Update & Career Desss Lead</button> -->
+                  <!-- <button type="submit" name="chiliadstaffingapi">Update & Chiliadstaffing Lead</button> -->
+                  <form id="myForm" action="" method="post">
+                    <!-- Your form elements here -->
+                    <a href="#" class="delet_e_btn" onclick="showConfirmDialog()">Delete</a>
+                    <button type="submit" name="delete_dynamic" class="del_btn" id="delete-btn" style="display:none;">Ok</button>
+                  </form>
                   <!-- <button type="submit" name="save_next">Save & Next</button> -->
                   <!-- <p>{{errormessage}}</p> -->
                   <!-- <a href="#">Test</a> -->
@@ -368,6 +448,69 @@ $(document).ready(function() {
 
 // });
 </script>
+<script>
+  function showConfirmDialog() {
+    if (confirm("Are you sure you want to delete?")) {
+      document.getElementById("delete-btn").click();
+    }
+  }
+</script>
+
+<!-- <script>
+  document.querySelector("button[name='chiliadstaffingapi']").addEventListener("click", function() {
+      // Your code to perform the button click action goes here
+
+      // Display success message
+      alert("Your lead has been updated to chiliadstaffing.com successfully!");
+  });
+
+  document.querySelector("button[name='careerdesssapi']").addEventListener("click", function() {
+      // Your code to perform the button click action goes here
+
+      // Display success message
+      alert("Your lead has been updated to career.desss.com successfully!");
+  });
+</script> -->
+
+<div id="success-message" style="display:none;">Your lead has been updated to chiliadstaffing.com successfully!</div>
+<div id="success-desss" style="display:none;">Your lead has been updated to career.desss.com successfully!</div>
+
+<script>
+  document.querySelector("button[name='chiliadstaffingapi']").addEventListener("click", function() {
+      // Your code to perform the button click action goes here
+
+      // Show success message
+      document.getElementById("success-message").style.display = "block";
+  });
+
+  document.querySelector("button[name='careerdesssapi']").addEventListener("click", function() {
+      // Your code to perform the button click action goes here
+
+      // Show success message
+      document.getElementById("success-desss").style.display = "block";
+  });
+</script>
+
+<!-- <script>
+  document.querySelector("button[name='chiliadstaffingapi']").addEventListener("click", function() {
+      // Your code to perform the button click action goes here
+
+      // Show success message after 3 seconds
+      setTimeout(function() {
+          document.getElementById("success-message").style.display = "block";
+      }, 2000);
+  });
+
+  document.querySelector("button[name='careerdesssapi']").addEventListener("click", function() {
+      // Your code to perform the button click action goes here
+
+      // Show success message after 3 seconds
+      setTimeout(function() {
+          document.getElementById("success-desss").style.display = "block";
+      }, 2000);
+  });
+</script> -->
+
 
         </div>
        </div>

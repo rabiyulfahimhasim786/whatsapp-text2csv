@@ -237,13 +237,73 @@ button[name="save_continues"]:hover {
   background-color: #3e8e41; /* Darker green on hover */
 }
 
-
-
+.delete-btn {
+        padding: 4px 15px;
+        background: #dc2626;
+        color: #fff;
+        text-decoration: none;
+        border-radius: 20px;
+        font-size: 15px;
+        border: none;
+        cursor: pointer;
+    }
+.delet_e_btn {
+  background-color: red;
+  text-decoration: none;
+    border: none;
+    color: white;
+    padding: 9px 24px;
+    text-align: center;
+    text-decoration: none;
+    display: inline-block;
+    font-size: 16px;
+    margin: 4px 2px;
+    cursor: pointer;
+    border-radius: 5px;
+}    
+.del_btn {
+    background-color: red;
+    border: none;
+    color: white;
+    padding: 5px 24px;
+    text-align: center;
+    text-decoration: none;
+    display: inline-block;
+    font-size: 16px;
+    margin: 4px 2px;
+    cursor: pointer;
+    border-radius: 5px;
+}
+.no_btn {
+  background-color: #4CAF50;
+    border: none;
+    color: white;
+    padding: 5px 24px;
+    text-align: center;
+    text-decoration: none;
+    display: inline-block;
+    font-size: 16px;
+    margin: 4px 2px;
+    cursor: pointer;
+    border-radius: 5px;
+}
 /* button[name="delete_d"] {
   background-color: #f44336;  */
-
-
- 
+.conform_pop {
+  background-color: #fff;
+    border: 1px solid #eee;
+    border-radius: 8px;
+    width: fit-content;
+    padding: 10px;
+    position: absolute;
+    top: 90px;
+    left: 50%;
+    transform: translate(-50% , -50%);
+}
+.conform_pop h3 {
+  padding: 0px;
+  margin: 0px;
+}
 
 </style>
 </head>
@@ -256,11 +316,25 @@ button[name="save_continues"]:hover {
                     <a class="back" href="{% url 'home' %}">Back</a>
                     <!-- <a class="back" href="{% url 'search' %}">Search</a> -->
                 </div>
+                <!-- <form id="delete-btn" method="POST" action="" style="display: none;">
+                  {% csrf_token %}
+                  <input type="hidden" name="delete_dynamic" value="1">
+              </form> -->
             <form action="/update/{{object.id}}" method="POST">
                 {% csrf_token %}
                 <ul class="form-style-1">
+                  <!-- <li>
+                    <label>Date</label> -->
+                    <!-- <textarea class="field-long field-textarea" name='title'>{{object.title}}</textarea> -->
+                    <!-- <input type="text" class="field-long field-textarea" name="date" value="{{object.date}}">
+                </li> -->
                     <li>
-                        <label>Date and Time</label>
+                      <label>Date</label>
+                      <!-- <textarea class="field-long field-textarea" name='title'>{{object.title}}</textarea> -->
+                      <input type="text" class="field-long field-textarea" name="date" value="{{object.date}}">
+                    </li>
+                    <li>
+                        <label>Time</label>
                         <!-- <textarea class="field-long field-textarea" name='title'>{{object.title}}</textarea> -->
                         <input type="text" class="field-long field-textarea" name="title" value="{{object.title}}">
                     </li>
@@ -306,9 +380,42 @@ button[name="save_continues"]:hover {
                 <li>
                   <!-- <button id="add_class" class="subbtn">Submit & Next</button> -->
                   <!-- <button type="submit" name="delete_d">Delete</button> -->
+                  
                   <button type="submit" name="save_continue">Update & Continue</button>
                   <button type="submit" name="save_home">Update</button>
                   <button type="submit" name="save_next">Update & Next</button>
+                  <!-- <button class="" onclick="resetDatabase()">Delete</button> -->
+                  <!-- <a href="#" class="delet_e_btn" onclick="resetDatabase()">Delete</a> -->
+                  <form id="myForm" action="" method="post">
+                    <!-- Your form elements here -->
+                    <a href="#" class="delet_e_btn" onclick="showConfirmDialog()">Delete</a>
+                    <button type="submit" name="delete_dynamic" class="del_btn" id="delete-btn" style="display:none;">Ok</button>
+                  </form>
+                  <!-- <button type="submit" name="delete_dynamic" onclick="resetDatabase()" id="delete-btn">Delete</button> -->
+                  <!-- <button type="submit" name="delete_dynamic" class="del_btn" id="delete-btn" style="display:none;">Ok</button> -->
+                  <!-- <div id="confirm" class="conform_pop" hidden>
+                    <h3>Confirmation</h3>
+                    <p>Are you sure you want to delete this item?</p>
+                   
+                    <button type="submit" name="delete_dynamic" class="del_btn" id="delete-btn">Ok</button>
+                    <button class="no_btn" onclick="confirmNo()">Cancel</button>    
+                  </div> -->
+
+                  <!-- {% block content %}
+                  <div class="container">
+                      <h1>Objects</h1>
+                      <ul>
+                         
+                              <li>
+                                  
+                                  <a href="{% url 'delete' object.id %}" class="btn btn-danger btn-sm">Delete</a>
+                              </li>
+                         
+                      </ul>
+                  </div>
+                  {% endblock %} -->
+
+                 
                   <!-- <p>{{errormessage}}</p> -->
                   <!-- <a href="#">Test</a> -->
                 </li>
@@ -331,6 +438,7 @@ button[name="save_continues"]:hover {
               </li>
             </ul>
           </div>
+          
             <!-- <script src="https://code.jquery.com/jquery-3.3.1.js"></script> -->
 <!-- <script type="text/javascript">
 $(document).ready(function() {
@@ -343,7 +451,7 @@ $(document).ready(function() {
     });
 }); 
 </script> -->
-<script>
+<!-- <script>
 
   function add_class_onchange(){
         var status = this.value;
@@ -354,7 +462,22 @@ $(document).ready(function() {
       
   }
 
+   //show the confirmation div
+   function resetDatabase() {
+          document.getElementById("confirm").hidden=false
+        }
+        
+        
+        function confirmYes() {
+              location.href = '/resetDatabase.php';
+        }
+        
+        
+        function confirmNo() {
+          document.getElementById("confirm").hidden=true
+        } -->
 
+<!-- 
 // $(function(){
 
 // $("#status").change(function(){
@@ -365,8 +488,27 @@ $(document).ready(function() {
 //         element.classList.add("Your class name");
 //     });
 
-// });
+// }); -->
+
+<!--  
+</script> -->
+
+<script>
+  function showConfirmDialog() {
+    if (confirm("Are you sure you want to delete?")) {
+      document.getElementById("delete-btn").click();
+    }
+  }
 </script>
+
+<!-- <script>
+  document.getElementById("delete-btn").addEventListener("click", function(event) {
+      event.preventDefault();
+      if (confirm("Are you sure you want to delete this item?")) {
+          document.getElementById("delete-btn").submit();
+      }
+  });
+  </script> -->
         </div>
        </div>
     </div>
